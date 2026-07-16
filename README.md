@@ -15,10 +15,10 @@ A highly visual, interactive portfolio for an Agentic AI Engineer focused on lon
 ## Stack
 
 - React 19
-- Next.js-compatible Vinext runtime
+- Next.js 16
 - TypeScript
 - Tailwind CSS 4
-- Cloudflare Workers / Sites hosting
+- Vercel-compatible production build
 
 ## Run locally
 
