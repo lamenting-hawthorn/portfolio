@@ -54,7 +54,7 @@ function HeroStage() {
     addEventListener("pointermove", onMove); return () => removeEventListener("pointermove", onMove);
   }, []);
   return <div className="hero-stage" ref={stage}>
-    <div className="garden-art"><img src="/art/agent-garden-clean.png" alt="Surreal Agent Garden of connected memory, governance, and evaluation modules"/></div>
+    <div className="garden-art"><img src="/art/agent-garden-complete.png" alt="Surreal Agent Garden of connected memory, governance, and evaluation modules"/></div>
     <div className="live-panels"><LivePanel kind="memory" title="MEMORY ONLINE" initial={{x:"52%",y:"9%"}}/><LivePanel kind="eval" title="EVAL LOOP 97.4%" initial={{x:"76%",y:"68%"}}/><LivePanel kind="governance" title="GOVERNANCE ACTIVE" initial={{x:"48%",y:"69%"}}/></div>
   </div>;
 }
