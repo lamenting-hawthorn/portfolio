@@ -1,6 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
+import { RevealObserver } from "@/components/motion";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +17,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Raghwender Vasisth — Agentic AI Engineer",
-  description: "Agentic AI engineer building memory, governance, evaluation, and self-improving systems for real-world agents.",
+  metadataBase: new URL("https://hawthorn-ai-labs.example.com"),
+  title: {
+    default: "Hawthorn AI Labs — Custom AI Models & Agentic Systems",
+    template: "%s · Hawthorn AI Labs",
+  },
+  description:
+    "Hawthorn AI Labs builds custom fine-tuned AI models and agentic systems, then deploys them into enterprise pipelines — from research to production.",
+  keywords: [
+    "custom AI models",
+    "fine-tuning",
+    "agentic systems",
+    "enterprise AI deployment",
+    "LLM engineering",
+    "AI consultancy",
+  ],
+  openGraph: {
+    title: "Hawthorn AI Labs — Custom AI Models & Agentic Systems",
+    description:
+      "Your data. Custom models. Real agents. We build and fine-tune custom AI models and deploy agentic systems that work for your business.",
+    type: "website",
+  },
   other: {
     "codex-preview": "development",
   },
@@ -24,17 +47,28 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#05070c",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="en" className={`dark ${geistSans.variable} ${geistMono.variable}`}>
+      <body className="antialiased">
+        <TooltipProvider delayDuration={200}>
+          <SiteHeader />
+          <div className="flex min-h-screen flex-col pt-[68px]">
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </div>
+        </TooltipProvider>
+        <RevealObserver />
       </body>
     </html>
   );

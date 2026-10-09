@@ -1,24 +1,57 @@
-# Raghwender Vasisth — Portfolio
+# Hawthorn AI Labs
 
-A highly visual, interactive portfolio for an Agentic AI Engineer focused on long-term memory, governance, evaluation, and self-improving agent systems.
+Marketing site for **Hawthorn AI Labs** — a company that builds custom fine-tuned AI models and
+agentic systems, then deploys them into enterprise pipelines.
 
-## Highlights
+Multi-page Next.js site with a dark, terminal-flavoured design system, a WebGL hero scene
+(three.js / react-three-fiber) and layered scroll + pointer parallax.
 
-- Cinematic retro-futurist hero inspired by a cloudy workstation aesthetic
-- Interactive Agent Garden with pointer parallax
-- Draggable live panels for memory, evaluation, and governance
-- Animated system graphs, policy gates, and status indicators
-- Project stories for SkillLoop, SuperMem, governed agent architecture, and more
-- Embedded Cal.com scheduling experience
-- Responsive desktop and mobile layouts
+## Pages
+
+| Route          | Contents                                                              |
+| -------------- | --------------------------------------------------------------------- |
+| `/`            | Hero (3D pipeline), delivery pipeline diagram, capabilities, case study, process, stack |
+| `/solutions`   | Why companies call, engagement models, deliverables, 10-week timeline  |
+| `/models`      | Model types, training methods, data pipeline, evaluation gates         |
+| `/agents`      | Agent anatomy, architecture layers, use cases, guardrails              |
+| `/deployments` | Deployment targets, model CI/CD, SLOs, security FAQ                    |
+| `/about`       | Position, principles, track record, open source, culture               |
+| `/contact`     | Project brief form, direct channels, what happens next                 |
 
 ## Stack
 
-- React 19
-- Next.js 16
-- TypeScript
+- React 19 · Next.js 16 (App Router, Turbopack)
 - Tailwind CSS 4
-- Vercel-compatible production build
+- [shadcn/ui](https://ui.shadcn.com) components (Radix-based: button, card, tabs, table,
+  accordion, sheet, input, textarea, tooltip, badge, separator)
+- three.js · @react-three/fiber · @react-three/drei
+- lucide-react icons
+- Deployable to Cloudflare Workers via the `vinext` build in `vite.config.ts`
+
+## Design system
+
+Everything lives in `app/globals.css`:
+
+- `:root` — shadcn tokens plus the Hawthorn palette (`--hx-cyan`, `--hx-green`, `--hx-blue`,
+  `--hx-amber`, `--hx-violet`) and the shared line/dim/glow values
+- `.hx-container` / `.hx-section` — page grid and section rhythm
+- `.hx-eyebrow`, `.hx-display`, `.hx-title`, `.hx-lede` — typography scale (Geist Mono for
+  display and labels, Geist Sans for body)
+- `.hx-panel`, `.hx-ticks`, `.hx-rule`, `.hx-grid-bg`, `.hx-glow`, `.hx-noise`, `.hx-scanlines`
+  — surface and backdrop primitives
+- `.hx-btn-primary` / `.hx-btn-ghost` — button treatments
+- `.hx-reveal` — scroll-reveal (driven once by `RevealObserver` in the root layout)
+
+## Motion
+
+- `components/hero-scene.tsx` — the 3D pipeline: four stations (data → model → agents →
+  deployment) with travelling energy pulses, orbiting agent nodes, floating DOM labels and
+  pointer/scroll parallax driven in `useFrame`. Falls back to a static status panel without WebGL
+  and pauses when scrolled out of view.
+- `components/motion.tsx` — `RevealObserver` (IntersectionObserver for every `.hx-reveal`) and
+  `ParallaxLayer` (scroll + pointer offsets; disabled under `prefers-reduced-motion`).
+- `components/hero.tsx` — layered hero: parallax grid → 3D canvas → HUD chips → copy, with a
+  scroll-linked fade on the stage and a typed terminal line.
 
 ## Run locally
 
@@ -29,20 +62,23 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by the development server.
-
 ## Production build
 
 ```bash
-npm run build
+npm run build   # static export of all 7 routes
+npm run lint
+npx tsc --noEmit
 ```
 
-## Main files
+## Structure
 
-- `app/page.tsx` — page content, live panels, drag behavior, and interactions
-- `app/globals.css` — visual system, animation, responsiveness, and layout
-- `public/art/` — Agent Garden production artwork
-- `app/layout.tsx` — metadata and root application layout
+```
+app/                route segments (one folder per nav item)
+components/         shared UI: header, footer, hero, 3D scene, cards, sections, blocks
+components/ui/      shadcn/ui primitives
+lib/utils.ts        cn() helper (shadcn)
+app/globals.css     the entire design system
+```
 
 ## Live site
 

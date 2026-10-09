@@ -1,96 +1,416 @@
-"use client";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Bot,
+  BrainCircuit,
+  CloudCog,
+  GitBranch,
+  Radar,
+  ShieldCheck,
+  Target,
+} from "lucide-react";
+import { Hero } from "@/components/hero";
+import { PipelineDiagram } from "@/components/pipeline-diagram";
+import { Container, Eyebrow, Section, SectionHeading } from "@/components/section";
+import { CTABand, Marquee } from "@/components/blocks";
+import { ExploreCard, FeatureCard, Metric, StepCard } from "@/components/cards";
 
-import { useEffect, useRef, useState } from "react";
-
-const projects = [
-  { n: "01", name: "SkillLoop", type: "LEARNING GOVERNOR", desc: "A local-first self-improvement harness that turns agent traces into governed evaluations, memories, skills, and fine-tuning exports.", tags: ["Python", "Evals", "Memory"], href: "https://github.com/lamenting-hawthorn/SkillLoop", color: "lime" },
-  { n: "02", name: "Governed Agent Architecture", type: "AGENT RUNTIME", desc: "LangGraph orchestration with durable memory, hybrid retrieval, local embeddings, injection defense, and evidence-first execution.", tags: ["LangGraph", "RAG", "Governance"], href: "https://github.com/lamenting-hawthorn/governed-agent-architecture", color: "orange" },
-  { n: "03", name: "SuperMem", type: "PERSISTENT MEMORY", desc: "Four-tier retrieval across SQLite FTS5, a knowledge graph, vectors, and an LLM agent—exposed through MCP.", tags: ["MCP", "FTS5", "Graph"], href: "https://github.com/lamenting-hawthorn/supermem", color: "blue" },
-  { n: "04", name: "Recall", type: "MEMORY WITHOUT RAG", desc: "An agent-navigated local knowledge base for persistent memory across Claude Desktop, LM Studio, and ChatGPT.", tags: ["Local-first", "MCP", "Python"], href: "https://github.com/lamenting-hawthorn/recall", color: "cream" },
-  { n: "05", name: "Oculie", type: "AUTONOMOUS MARKETS", desc: "A weather-market agent that fuses forecast sources, finds mispriced contracts, and sizes risk using the Kelly criterion.", tags: ["Agents", "Forecasting", "Trading"], href: "https://github.com/lamenting-hawthorn/oculie", color: "orange" },
+const CAPABILITIES = [
+  {
+    index: "01",
+    icon: <BrainCircuit className="size-5" />,
+    title: "Custom Model Development",
+    body: "We fine-tune, distill and evaluate foundation models on your domain data until they beat generic ones where it actually matters — with the evals to prove it.",
+    href: "/models",
+  },
+  {
+    index: "02",
+    icon: <Bot className="size-5" />,
+    title: "Agentic Systems",
+    body: "Plan, reason and act loops with tools, memory, policy gates and human checkpoints — designed to survive retries, handoffs and messy real workflows.",
+    href: "/agents",
+  },
+  {
+    index: "03",
+    icon: <CloudCog className="size-5" />,
+    title: "Enterprise Deployment",
+    body: "Cloud, on-prem, hybrid or air-gapped. Shipped into your CI/CD, observability and security posture instead of living in a demo notebook.",
+    href: "/deployments",
+  },
+  {
+    index: "04",
+    icon: <ShieldCheck className="size-5" />,
+    title: "Evaluation & Governance",
+    body: "Trace-level evaluations, red-teaming, provenance and audit trails. Every release ships with evidence, not vibes.",
+    href: "/solutions",
+  },
 ];
 
-type PanelKind = "memory" | "eval" | "governance";
+const PROCESS = [
+  {
+    n: "01",
+    meta: "week 1–2",
+    title: "Discover",
+    body: "We map the workflow, the data you actually have, the failure modes that cost you, and the bar a system must clear to be trusted.",
+  },
+  {
+    n: "02",
+    meta: "week 2–5",
+    title: "Prototype",
+    body: "A thin vertical slice in your environment: a fine-tuned candidate or agent loop wired to real tools, measured against a baseline you agree on.",
+  },
+  {
+    n: "03",
+    meta: "week 5–10",
+    title: "Harden",
+    body: "Evals, guardrails, adversarial testing, latency and cost tuning, fallback paths and human review points until it holds under load.",
+  },
+  {
+    n: "04",
+    meta: "ongoing",
+    title: "Operate",
+    body: "Deployment pipelines, drift monitoring, retraining triggers and on-call runbooks — so the system keeps improving after launch.",
+  },
+];
 
-function LivePanel({ kind, title, initial }: { kind: PanelKind; title: string; initial: { x: string; y: string } }) {
-  const [position, setPosition] = useState<{x:number;y:number} | null>(null);
-  const drag = useRef<{ x: number; y: number; px: number; py: number } | null>(null);
-  const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    const panel = event.currentTarget.parentElement as HTMLElement;
-    drag.current = { x: event.clientX, y: event.clientY, px: panel.offsetLeft, py: panel.offsetTop };
-    event.currentTarget.setPointerCapture(event.pointerId);
-  };
-  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!drag.current) return;
-    const panel = event.currentTarget.parentElement as HTMLElement;
-    const bounds = panel.parentElement as HTMLElement;
-    const nextX = drag.current.px + event.clientX - drag.current.x;
-    const nextY = drag.current.py + event.clientY - drag.current.y;
-    setPosition({ x: Math.max(0, Math.min(nextX, bounds.clientWidth - panel.offsetWidth)), y: Math.max(0, Math.min(nextY, bounds.clientHeight - panel.offsetHeight)) });
-  };
-  const stop = () => { drag.current = null; };
-  return <div className={`live-panel live-${kind}`} style={{ left: position?.x ?? initial.x, top: position?.y ?? initial.y }}>
-    <div className="live-panel-head" onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={stop} onPointerCancel={stop} title="Drag to move">
-      <span><i/>{title}</span><b>⠿</b>
-    </div>
-    <div className="live-panel-body">
-      {kind === "memory" && <svg className="memory-network" viewBox="0 0 240 120" aria-label="Animated memory network"><g className="memory-lines"><path d="M28 82L75 34L121 69L166 24L211 76"/><path d="M28 82L121 69L211 76M75 34L166 24"/></g>{[[28,82],[75,34],[121,69],[166,24],[211,76],[94,95],[190,101]].map((p,i)=><circle key={i} cx={p[0]} cy={p[1]} r={i===2?8:5} style={{animationDelay:`${i*.18}s`}}/>)}</svg>}
-      {kind === "eval" && <svg className="eval-chart" viewBox="0 0 260 110" aria-label="Animated evaluation score"><path className="grid-line" d="M0 22H260M0 55H260M0 88H260"/><polyline points="0,90 22,76 43,82 66,40 88,64 110,29 132,58 154,50 176,71 198,33 222,39 260,12"/><circle cx="260" cy="12" r="6"/><text x="4" y="16">LIVE SCORE</text></svg>}
-      {kind === "governance" && <div className="governance-list">{["POLICY GATE", "EVIDENCE LOG", "HUMAN REVIEW"].map((x,i)=><div key={x}><i style={{animationDelay:`${i*.35}s`}}>✓</i><span>{x}</span><b/></div>)}</div>}
-    </div>
-  </div>;
-}
-
-function HeroStage() {
-  const stage = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const onMove = (event: PointerEvent) => {
-      const rect = stage.current?.getBoundingClientRect(); if (!rect) return;
-      const x = (event.clientX - rect.left) / rect.width - .5;
-      const y = (event.clientY - rect.top) / rect.height - .5;
-      stage.current?.style.setProperty("--mx", `${x * 22}px`);
-      stage.current?.style.setProperty("--my", `${y * 14}px`);
-    };
-    addEventListener("pointermove", onMove); return () => removeEventListener("pointermove", onMove);
-  }, []);
-  return <div className="hero-stage" ref={stage}>
-    <div className="garden-art"><img src="/art/agent-garden-complete.png" alt="Surreal Agent Garden of connected memory, governance, and evaluation modules"/></div>
-    <div className="live-panels"><LivePanel kind="memory" title="MEMORY ONLINE" initial={{x:"52%",y:"9%"}}/><LivePanel kind="eval" title="EVAL LOOP 97.4%" initial={{x:"76%",y:"68%"}}/><LivePanel kind="governance" title="GOVERNANCE ACTIVE" initial={{x:"48%",y:"69%"}}/></div>
-  </div>;
-}
+const STACK = [
+  "Python",
+  "PyTorch",
+  "vLLM",
+  "Hugging Face",
+  "Ray",
+  "MLflow",
+  "Weights & Biases",
+  "LangGraph",
+  "Kubernetes",
+  "Terraform",
+  "Postgres",
+  "pgvector",
+  "Kafka",
+  "AWS",
+  "GCP",
+  "Azure",
+  "Modal",
+  "FastAPI",
+  "Redis",
+  "Airflow",
+];
 
 export default function Home() {
-  const [loaded,setLoaded]=useState(false);
-  useEffect(()=>{const t=setTimeout(()=>setLoaded(true),450); return()=>clearTimeout(t)},[]);
-  return <main className={loaded?"loaded":""}>
-    <div className="boot"><span>HAWTHORN.OS</span><b>CONNECTING AGENTS</b></div>
-    <section className="hero" id="top">
-      <div className="machine-shell">
-        <header><a className="wordmark" href="#top">RAGHWENDER</a><nav><a href="#systems">SYSTEMS</a><a href="#projects">PROJECTS</a><a href="#about">ABOUT</a><a className="nav-cta" href="https://cal.com/hawthorn" target="_blank">BOOK A CALL ↗</a></nav><span className="power-light"/></header>
-        <div className="screen">
-          <div className="noise"/><div className="hero-copy"><p className="eyebrow">AGENTIC AI ENGINEER // SYSTEM ONLINE</p><h1><span className="cinematic-line"><i>I BUILD BRAINS</i></span><span className="cinematic-line"><i>FOR AI</i></span><span className="cinematic-line"><i>AGENTS<b>.</b></i></span></h1><p className="lede">Memory, governance and self-improving systems for agents that work in the real world.</p><div className="actions"><a className="button primary" href="#projects">EXPLORE THE SYSTEM →</a><a className="button ghost" href="https://cal.com/hawthorn" target="_blank">BOOK A CALL ↗</a></div></div>
-          <HeroStage/>
-          <div className="scroll-hint">SCROLL TO ENTER ↓</div>
+  return (
+    <>
+      <Hero />
+
+      {/* ---------------------------------------------------------- */}
+      {/*  Pipeline                                                    */}
+      {/* ---------------------------------------------------------- */}
+      <Section id="pipeline" className="border-b border-white/8 bg-[#06090f]">
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+            <SectionHeading
+              eyebrow="How it works"
+              eyebrowTone="green"
+              title="Four stages, one delivery pipeline."
+              lede="Most AI pilots die between the notebook and the org. We own the whole path — the data contract, the model, the agent runtime and the deployment target."
+            />
+
+            <div className="hx-panel hx-reveal relative overflow-hidden bg-[#070a10] p-5 [--hx-delay:180ms]">
+              <div className="hx-mono flex flex-col gap-2 text-[12px] leading-relaxed">
+                <span className="text-[#4d5a6b]">
+                  $ hawthorn deploy --pipeline production
+                </span>
+                <span className="text-[#3fb950]">
+                  ✓ data contract validated <span className="text-[#4d5a6b]">· 4 sources</span>
+                </span>
+                <span className="text-[#3fb950]">
+                  ✓ model candidate evaluated <span className="text-[#4d5a6b]">· +18.6 pts</span>
+                </span>
+                <span className="text-[#3fb950]">
+                  ✓ agent guardrails passing <span className="text-[#4d5a6b]">· 42 checks</span>
+                </span>
+                <span className="text-[#4ec9ff]">
+                  → shipping to 3 regions
+                  <span className="hx-caret" />
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-14">
+            <PipelineDiagram />
+          </div>
+        </Container>
+      </Section>
+
+      {/* ---------------------------------------------------------- */}
+      {/*  Capabilities                                                */}
+      {/* ---------------------------------------------------------- */}
+      <Section id="capabilities">
+        <div className="hx-grid-bg opacity-60" aria-hidden />
+        <Container className="relative">
+          <div className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+            <SectionHeading
+              eyebrow="01 / Capabilities"
+              title={
+                <>
+                  Four disciplines.
+                  <br />
+                  One accountable team.
+                </>
+              }
+            />
+            <p className="hx-lede hx-reveal max-w-sm [--hx-delay:200ms]">
+              We are not a staffing shop and not a research lab. We are the engineering layer that
+              turns a model into a system your business can depend on.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            {CAPABILITIES.map((c, i) => (
+              <FeatureCard key={c.index} {...c} delay={i * 80} />
+            ))}
+          </div>
+
+          <div className="mt-16 grid gap-8 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-4">
+            <Metric value="142K" label="records analysed" sub="Anomaly detection across a national collection network" />
+            <Metric value="+18.6" label="points over baseline" sub="Typical lift of a domain fine-tune vs. the base model" delay={90} />
+            <Metric value="3" label="deployment targets" sub="Cloud, on-prem and hybrid from one artifact" delay={180} />
+            <Metric value="24h" label="first response" sub="NDA-friendly scoping call with an engineer" delay={270} />
+          </div>
+        </Container>
+      </Section>
+
+      {/* ---------------------------------------------------------- */}
+      {/*  Explore the workstreams                                     */}
+      {/* ---------------------------------------------------------- */}
+      <Section id="workstreams" className="border-y border-white/8 bg-[#06090f]">
+        <div className="hx-glow left-1/2 top-1/2 size-[38rem] -translate-x-1/2 -translate-y-1/2 bg-[#0c3352]" aria-hidden />
+        <Container className="relative">
+          <SectionHeading
+            eyebrow="02 / Where we go deep"
+            title="Pick the layer you need."
+            lede="Each workstream is a full engagement on its own — and they compound when you run them together."
+          />
+
+          <div className="mt-14 grid gap-5 lg:grid-cols-3">
+            <ExploreCard
+              index="A"
+              title="Custom Models"
+              blurb="Domain-adapted models that know your terminology, your formats and your edge cases."
+              points={["SFT, DPO, LoRA & distillation", "Private data pipelines", "Eval harness & baselines"]}
+              href="/models"
+              delay={0}
+            />
+            <ExploreCard
+              index="B"
+              title="Agentic Systems"
+              blurb="Supervised agents that plan, call your tools, use memory and know when to stop."
+              points={["Tool & MCP integration", "Memory & retrieval", "Policy gates and rollback"]}
+              href="/agents"
+              accent="green"
+              delay={100}
+            />
+            <ExploreCard
+              index="C"
+              title="Deployments"
+              blurb="The unglamorous part done properly: rollout, scaling, monitoring, cost and compliance."
+              points={["Cloud, on-prem, hybrid, air-gapped", "Model CI/CD & canary releases", "Drift, latency and cost SLOs"]}
+              href="/deployments"
+              accent="blue"
+              delay={200}
+            />
+          </div>
+        </Container>
+      </Section>
+
+      {/* ---------------------------------------------------------- */}
+      {/*  Case study                                                  */}
+      {/* ---------------------------------------------------------- */}
+      <Section id="proof">
+        <Container>
+          <div className="hx-panel hx-ticks relative overflow-hidden bg-[#070a10]">
+            <div className="hx-noise" aria-hidden />
+            <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="flex flex-col gap-7 p-8 md:p-12">
+                <Eyebrow tone="green" bracket>
+                  Real-world signal / deployed
+                </Eyebrow>
+
+                <h2 className="hx-display hx-reveal text-[clamp(1.9rem,4vw,3.1rem)] text-white">
+                  142K records.
+                  <br />
+                  <span className="text-[#4ec9ff]">One hidden pattern.</span>
+                </h2>
+
+                <p className="max-w-xl text-[15px] leading-relaxed text-[#93a2b6]">
+                  A multi-agent anomaly detection system for a multimillion-dollar dairy company —
+                  built to surface subtle quality anomalies hiding across a vast collection network
+                  that manual sampling never caught.
+                </p>
+
+                <ul className="flex flex-col gap-3 border-t border-white/10 pt-6">
+                  {[
+                    "Fuses sensor, collection and quality signals across heterogeneous sources",
+                    "Agents rank and justify every anomaly with traceable evidence",
+                    "Findings surfaced to operations, not buried in a dashboard",
+                  ].map((t) => (
+                    <li key={t} className="flex gap-3 text-[14px] text-[#8593a6]">
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#3fb950]" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+
+                <Link
+                  href="/solutions"
+                  className="hx-mono inline-flex w-fit items-center gap-2 border-b border-[#4ec9ff]/40 pb-1 text-[11px] tracking-[0.14em] text-[#4ec9ff] uppercase transition-colors hover:border-[#4ec9ff] hover:text-white"
+                >
+                  Read how we approach it <ArrowRight className="size-3.5" />
+                </Link>
+              </div>
+
+              <div className="relative border-t border-white/10 bg-[#060a10] p-8 md:p-12 lg:border-t-0 lg:border-l">
+                <div className="grid gap-8">
+                  <div className="flex items-center gap-3">
+                    <Radar className="size-4 text-[#4ec9ff]" />
+                    <span className="hx-mono text-[10px] tracking-[0.18em] text-[#5d6b7e] uppercase">
+                      Evidence log
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <strong className="hx-display block text-[clamp(2rem,3.4vw,2.9rem)] leading-none font-medium text-white">
+                        600–700+
+                      </strong>
+                      <span className="hx-mono mt-2 block text-[10px] leading-relaxed tracking-[0.14em] text-[#5d6b7e] uppercase">
+                        collection centres monitored
+                      </span>
+                    </div>
+                    <div>
+                      <strong className="hx-display block text-[clamp(2rem,3.4vw,2.9rem)] leading-none font-medium text-[#3fb950]">
+                        2 of 3
+                      </strong>
+                      <span className="hx-mono mt-2 block text-[10px] leading-relaxed tracking-[0.14em] text-[#5d6b7e] uppercase">
+                        AI-flagged centres confirmed in a secret audit
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-3 border-t border-white/10 pt-6">
+                    {[
+                      { k: "signal", v: "confirmed", ok: true },
+                      { k: "precision @ audit", v: "66.7%", ok: true },
+                      { k: "false positives", v: "1 of 3", ok: false },
+                      { k: "status", v: "in production", ok: true },
+                    ].map((r) => (
+                      <div
+                        key={r.k}
+                        className="hx-mono flex items-center justify-between gap-4 text-[11.5px] text-[#6f8296]"
+                      >
+                        <span>{r.k}</span>
+                        <span className={r.ok ? "text-[#3fb950]" : "text-[#f0b429]"}>{r.v}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ---------------------------------------------------------- */}
+      {/*  Process                                                     */}
+      {/* ---------------------------------------------------------- */}
+      <Section id="process" className="border-t border-white/8">
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <SectionHeading
+                eyebrow="03 / Engagement"
+                title={
+                  <>
+                    Research to
+                    <br />
+                    production.
+                  </>
+                }
+                lede="A fixed-shape engagement with an engineer attached to every stage. No handoff cliff, no proof-of-concept graveyard."
+              />
+              <Link
+                href="/solutions"
+                className="hx-btn hx-btn-ghost hx-reveal mt-8 [--hx-delay:220ms]"
+              >
+                Engagement models
+                <ArrowRight className="size-4" />
+              </Link>
+            </div>
+
+            <div className="grid gap-8 sm:grid-cols-2">
+              {PROCESS.map((p, i) => (
+                <StepCard key={p.n} {...p} delay={i * 90} />
+              ))}
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ---------------------------------------------------------- */}
+      {/*  Stack                                                       */}
+      {/* ---------------------------------------------------------- */}
+      <Section bleed className="border-y border-white/8 bg-[#06090f] py-10">
+        <div className="mb-7 flex items-center gap-4">
+          <Container className="flex items-center gap-4">
+            <GitBranch className="size-4 shrink-0 text-[#4ec9ff]" />
+            <span className="hx-mono text-[10px] tracking-[0.18em] text-[#5d6b7e] uppercase">
+              Toolchain we ship with
+            </span>
+            <span className="h-px flex-1 bg-white/10" />
+            <Target className="size-4 shrink-0 text-[#3fb950]" />
+          </Container>
         </div>
-        <div className="machine-foot"><div className="meter"><span>SYSTEM STATUS</span><b>ALL AGENTS OPERATIONAL</b><em/></div><i/><i/></div>
-      </div>
-    </section>
+        <Marquee
+          items={STACK.map((s) => (
+            <span
+              key={s}
+              className="hx-mono text-[13px] tracking-[0.1em] whitespace-nowrap text-[#8593a6] uppercase"
+            >
+              {s}
+            </span>
+          ))}
+        />
+        <Marquee
+          reverse
+          className="mt-4"
+          items={["Custom models", "Agentic systems", "Production deployment", "Evaluation", "Governance", "Observability", "Cost control", "Security review"].map(
+            (s) => (
+              <span
+                key={s}
+                className="hx-mono text-[13px] tracking-[0.1em] whitespace-nowrap text-[#4d5a6b] uppercase"
+              >
+                {s}
+              </span>
+            )
+          )}
+        />
+      </Section>
 
-    <section className="ticker"><div>MEMORY ✦ GOVERNANCE ✦ EVALS ✦ MULTI-AGENT SYSTEMS ✦ RETRIEVAL ✦ EVIDENCE ✦ MEMORY ✦ GOVERNANCE ✦ EVALS ✦</div></section>
-
-    <section className="systems section" id="systems"><div className="section-label">01 / SYSTEM ARCHITECTURE</div><div className="systems-heading"><h2>AGENTS SHOULD<br/><em>REMEMBER.</em><br/>PROVE. IMPROVE.</h2><p>I design the machinery between a model and the real world—the context it receives, the tools it can touch, the evidence it leaves, and the lessons it is allowed to keep.</p></div><div className="capability-grid">{[
-      ["MEMORY", "Episodic, semantic, graph and working memory—retrieved with purpose, not dumped into context."], ["GOVERNANCE", "Policy gates, approval boundaries, provenance, and review-before-apply learning."], ["EVALUATION", "Trace-level evidence, deterministic checks, failure taxonomies, and improvement loops."], ["ORCHESTRATION", "Multi-agent workflows that survive long tasks, retries, handoffs, and real infrastructure."],
-    ].map((x,i)=><article key={x[0]}><span>0{i+1}</span><div className="orb"/><h3>{x[0]}</h3><p>{x[1]}</p></article>)}</div></section>
-
-    <section className="case-study section"><div className="case-kicker">REAL-WORLD SIGNAL / 2026</div><div className="case-title"><h2>142K RECORDS.<br/><span>ONE HIDDEN PATTERN.</span></h2><p>A multi-agent anomaly detection system for a multimillion-dollar dairy company—built to find where subtle quality anomalies were hiding across a vast collection network.</p></div><div className="evidence-panel"><div className="radar">{Array.from({length:12},(_,i)=><i key={i} style={{transform:`rotate(${i*30}deg) translateY(-82px)`}}/>)}<b>02/03</b><span>CONFIRMED</span></div><div className="evidence-copy"><strong>600–700+</strong><span>COLLECTION CENTERS</span><strong>2 OF 3</strong><span>AI-FLAGGED CENTERS CONFIRMED IN A SECRET AUDIT</span></div></div></section>
-
-    <section className="projects section" id="projects"><div className="section-label">02 / SELECTED SYSTEMS</div><div className="project-intro"><h2>SOFTWARE WITH<br/><em>A MEMORY.</em></h2><p>Selected open-source systems from my GitHub. Each begins with the same question: what does an agent need around the model to become reliable?</p></div><div className="project-list">{projects.map((p,i)=><a href={p.href} target="_blank" className={`project-row ${p.color}`} key={p.name}><span className="project-num">{p.n}</span><div><small>{p.type}</small><h3>{p.name}</h3></div><p>{p.desc}</p><div className="tags">{p.tags.map(t=><i key={t}>{t}</i>)}</div><b>↗</b></a>)}</div></section>
-
-    <section className="about section" id="about"><div className="about-sticky"><div className="section-label">03 / HUMAN IN THE LOOP</div><h2>ENGINEER.<br/>BUILDER.<br/><em>STORYTELLER.</em></h2></div><div className="timeline"><article><span>NOW</span><h3>AGENTIC AI ENGINEER</h3><p>Building persistent memory, governed learning, and multi-agent infrastructure for enterprise systems.</p></article><article><span>2026</span><h3>xAI · GROK AUDIO</h3><p>Worked on Hindi and English evaluation and training for multilingual voice intelligence.</p></article><article><span>PROOF</span><h3>FROM DATA TO AUDIT</h3><p>Built an anomaly-detection system across 142K+ dairy records; two of three randomly audited flagged centers were confirmed.</p></article><article><span>BEYOND CODE</span><h3>COMMUNITIES & MEDIA</h3><p>Helped grow a 100K+ YouTube audience, produced a podcast with 2M+ listens, and hosted large-scale hackathons.</p></article></div></section>
-
-    <section className="manifesto"><p>THE FUTURE ISN’T JUST<br/>BIGGER MODELS.</p><h2>IT’S SMALLER, SHARPER<br/><em>SYSTEMS AROUND THEM.</em></h2></section>
-
-    <section className="contact section" id="contact"><div className="contact-copy"><div className="section-label">04 / OPEN A PORTAL</div><h2>LET’S BUILD<br/>SOMETHING THAT<br/><em>REMEMBERS.</em></h2><p>Have an agent system that needs memory, governance, evaluation—or a path out of prototype purgatory?</p><div className="socials"><a href="https://github.com/lamenting-hawthorn" target="_blank">GITHUB ↗</a><a href="https://www.linkedin.com/in/raghwender-vasisth/" target="_blank">LINKEDIN ↗</a></div></div><div className="observatory"><div className="observatory-top"><span><i/> CALENDAR ONLINE</span><b>IST / WORLDWIDE</b></div><iframe title="Schedule a meeting with Raghwender" src="https://cal.com/hawthorn?embed=true&theme=light" loading="lazy"/><a href="https://cal.com/hawthorn" target="_blank" className="book-big">OPEN CAL.COM <span>↗</span></a></div></section>
-    <footer><span>RAGHWENDER VASISTH © 2026</span><span>AGENTIC AI ENGINEER · INDIA / WORLDWIDE</span><a href="#top">REBOOT ↑</a></footer>
-  </main>;
+      {/* ---------------------------------------------------------- */}
+      {/*  CTA                                                         */}
+      {/* ---------------------------------------------------------- */}
+      <CTABand
+        title={
+          <>
+            Tell us the workflow.
+            <br />
+            We&apos;ll bring the system.
+          </>
+        }
+        lede="Share the data, the tools and the bar for success. You get a scoped plan, a timeline and a named engineer — not a deck."
+        primary={{ label: "Build Your AI System", href: "/contact" }}
+        secondary={{ label: "See Our Solutions", href: "/solutions" }}
+      />
+    </>
+  );
 }
