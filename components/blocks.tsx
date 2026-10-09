@@ -22,7 +22,7 @@ export function Marquee({
       {items.map((item, i) => (
         <span key={i} className="flex items-center">
           {item}
-          <span className="mx-6 text-[#4ec9ff]/45 md:mx-8">/</span>
+          <span className="mx-6 text-[var(--hx-cyan)]/45 md:mx-8">/</span>
         </span>
       ))}
     </div>
@@ -59,11 +59,11 @@ export function CTABand({
   secondary?: { label: string; href: string };
 }) {
   return (
-    <section className="relative overflow-hidden border-t border-white/8 bg-[#06090f]">
+    <section className="relative overflow-hidden border-t border-[var(--hx-line)] bg-[var(--hx-bg)]">
       <div className="hx-grid-bg opacity-70" aria-hidden />
       <div
         aria-hidden
-        className="hx-glow top-1/2 left-1/2 size-[42rem] -translate-x-1/2 -translate-y-1/2 bg-[#0d3a5e]"
+        className="hx-glow top-1/2 left-1/2 size-[42rem] -translate-x-1/2 -translate-y-1/2 bg-[var(--hx-glow)]"
         style={{ opacity: 0.45 }}
       />
       <div className="hx-noise" aria-hidden />
@@ -74,7 +74,7 @@ export function CTABand({
             {eyebrow}
           </Eyebrow>
 
-          <h2 className="hx-display hx-reveal max-w-4xl text-[clamp(2rem,5vw,3.75rem)] text-white md:text-center">
+          <h2 className="hx-display hx-reveal max-w-4xl text-[clamp(2rem,5vw,3.75rem)] text-[var(--hx-heading)] md:text-center">
             {title}
           </h2>
 
@@ -99,7 +99,7 @@ export function CTABand({
           </Link>
         </div>
 
-        <p className="hx-mono hx-reveal text-[10.5px] tracking-[0.16em] text-[#4d5a6b] uppercase [--hx-delay:320ms]">
+        <p className="hx-mono hx-reveal text-[10.5px] tracking-[0.16em] text-[var(--hx-faint)] uppercase [--hx-delay:320ms]">
           Typical first response within 24 hours · NDA-friendly
         </p>
       </div>

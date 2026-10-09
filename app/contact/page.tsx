@@ -92,13 +92,13 @@ export default function ContactPage() {
       <Section id="start">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-            <div className="hx-panel hx-ticks bg-[#070a10] p-7 md:p-9">
+            <div className="hx-panel hx-ticks bg-[var(--hx-surface)] p-7 md:p-9">
               <div className="mb-7 flex items-center gap-3">
-                <MessageSquare className="size-4 text-[#4ec9ff]" />
-                <span className="hx-mono text-[10px] tracking-[0.18em] text-[#5d6b7e] uppercase">
+                <MessageSquare className="size-4 text-[var(--hx-cyan)]" />
+                <span className="hx-mono text-[10px] tracking-[0.18em] text-[var(--hx-faint)] uppercase">
                   Project brief
                 </span>
-                <span className="h-px flex-1 bg-white/10" />
+                <span className="h-px flex-1 bg-[var(--hx-line)]" />
               </div>
               <BriefForm />
             </div>
@@ -109,26 +109,26 @@ export default function ContactPage() {
                   key={c.label}
                   href={c.href}
                   {...(c.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
-                  className="hx-reveal group flex items-start gap-4 border border-white/10 bg-[#080c12] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#4ec9ff]/40 hover:bg-[#0a111a]"
+                  className="hx-reveal group flex items-start gap-4 border border-[var(--hx-line)] bg-[var(--hx-surface)] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--hx-cyan)]/40 hover:bg-[var(--hx-surface-2)]"
                   style={{ "--hx-delay": `${i * 70}ms` } as CSSProperties}
                 >
-                  <span className="mt-0.5 text-[#4ec9ff]">{c.icon}</span>
+                  <span className="mt-0.5 text-[var(--hx-cyan)]">{c.icon}</span>
                   <span className="min-w-0 flex-1">
-                    <span className="hx-mono block text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
+                    <span className="hx-mono block text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
                       {c.label}
                     </span>
-                    <span className="mt-1 block truncate text-[15px] font-medium text-white">
+                    <span className="mt-1 block truncate text-[15px] font-medium text-[var(--hx-heading)]">
                       {c.value}
                     </span>
-                    <span className="mt-0.5 block text-[13px] text-[#7e8da3]">{c.note}</span>
+                    <span className="mt-0.5 block text-[13px] text-[var(--hx-muted-2)]">{c.note}</span>
                   </span>
-                  <ArrowUpRight className="size-4 shrink-0 text-[#3f4c5c] transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
+                  <ArrowUpRight className="size-4 shrink-0 text-[var(--hx-faint-2)] transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--hx-heading)]" />
                 </a>
               ))}
 
-              <div className="hx-reveal mt-2 flex items-start gap-3 border border-[#3fb950]/25 bg-[#3fb950]/5 p-5">
-                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[#3fb950]" />
-                <p className="text-[13.5px] leading-relaxed text-[#93a2b6]">
+              <div className="hx-reveal mt-2 flex items-start gap-3 border border-[var(--hx-green)]/25 bg-[var(--hx-green)]/5 p-5">
+                <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[var(--hx-green)]" />
+                <p className="text-[13.5px] leading-relaxed text-[var(--hx-muted)]">
                   We&rsquo;re happy to sign a mutual NDA before you share anything sensitive, and we never
                   use client data to train models unless that&rsquo;s explicitly contracted.
                 </p>
@@ -139,7 +139,7 @@ export default function ContactPage() {
       </Section>
 
       {/* What happens next */}
-      <Section id="next" className="border-y border-white/8 bg-[#06090f]">
+      <Section id="next" className="border-y border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <div className="hx-grid-bg opacity-50" aria-hidden />
         <Container className="relative">
           <SectionHeading
@@ -175,13 +175,13 @@ export default function ContactPage() {
               ].map((t, i) => (
                 <li
                   key={t}
-                  className="hx-reveal flex items-start gap-4 border-b border-white/10 py-4 first:border-t"
+                  className="hx-reveal flex items-start gap-4 border-b border-[var(--hx-line)] py-4 first:border-t"
                   style={{ "--hx-delay": `${i * 55}ms` } as CSSProperties}
                 >
-                  <span className="hx-mono mt-0.5 w-8 shrink-0 text-[11px] tracking-[0.12em] text-[#4ec9ff]">
+                  <span className="hx-mono mt-0.5 w-8 shrink-0 text-[11px] tracking-[0.12em] text-[var(--hx-cyan)]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-[15px] leading-relaxed text-[#a4b2c5]">{t}</span>
+                  <span className="text-[15px] leading-relaxed text-[var(--hx-muted)]">{t}</span>
                 </li>
               ))}
             </ul>

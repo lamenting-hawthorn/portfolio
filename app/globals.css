@@ -6,10 +6,111 @@
 
 /* ------------------------------------------------------------------ */
 /*  HAWTHORN AI LABS — design tokens                                   */
+/*  :root = light (default), .dark = dark. Set by the inline script in */
+/*  app/layout.tsx before first paint, then by the header toggle.      */
 /* ------------------------------------------------------------------ */
 
 :root {
+  color-scheme: light;
+
   --radius: 0.7rem;
+
+  /* shadcn tokens — light */
+  --background: #f5f7fa;
+  --foreground: #0e1622;
+
+  --card: #ffffff;
+  --card-foreground: #0e1622;
+
+  --popover: #ffffff;
+  --popover-foreground: #0e1622;
+
+  --primary: #0369a1;
+  --primary-foreground: #ffffff;
+
+  --secondary: #eaeef4;
+  --secondary-foreground: #16202d;
+
+  --muted: #eef1f6;
+  --muted-foreground: #5b6779;
+
+  --accent: #e6f3fb;
+  --accent-foreground: #075985;
+
+  --destructive: #d93b30;
+
+  --border: rgba(15, 23, 42, 0.1);
+  --input: rgba(15, 23, 42, 0.16);
+  --ring: rgba(3, 105, 161, 0.5);
+
+  --chart-1: #0369a1;
+  --chart-2: #2563eb;
+  --chart-3: #15803d;
+  --chart-4: #b45309;
+  --chart-5: #6d28d9;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0e1622;
+  --sidebar-primary: #0369a1;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef1f6;
+  --sidebar-accent-foreground: #16202d;
+  --sidebar-border: rgba(15, 23, 42, 0.1);
+  --sidebar-ring: rgba(2, 132, 199, 0.5);
+
+  /* Hawthorn semantic palette — light */
+  --hx-bg: #f5f7fa;
+  --hx-surface: #ffffff;
+  --hx-surface-2: #eef1f6;
+
+  --hx-heading: #0b1220;
+  --hx-fg: #1f2937;
+  --hx-muted: #46536a;
+  --hx-muted-2: #566378;
+  --hx-faint: #5b6779;
+  --hx-faint-2: #67717f;
+
+  --hx-line: rgba(15, 23, 42, 0.1);
+  --hx-line-soft: rgba(15, 23, 42, 0.06);
+  --hx-line-strong: rgba(15, 23, 42, 0.2);
+
+  --hx-cyan: #0369a1;
+  --hx-cyan-soft: #075985;
+  --hx-blue: #1d4ed8;
+  --hx-green: #15803d;
+  --hx-amber: #b45309;
+  --hx-violet: #6d28d9;
+  --hx-hot: #38bdf8;
+  --hx-dim: #64748b;
+
+  --hx-glow: rgba(3, 105, 161, 0.13);
+  --hx-grid: rgba(15, 23, 42, 0.055);
+  --hx-accent-glow: rgba(3, 105, 161, 0.3);
+
+  --hx-btn-from: #0369a1;
+  --hx-btn-to: #075985;
+  --hx-btn-fg: #ffffff;
+  --hx-btn-shadow: rgba(3, 105, 161, 0.4);
+
+  --hx-on-accent: #ffffff;
+  --hx-on-accent-muted: rgba(255, 255, 255, 0.75);
+
+  /* shadcn chart/brand aliases used by .hx-eyebrow etc. */
+  --hx-cyan-line: rgba(3, 105, 161, 0.5);
+  --hx-cyan-tint: rgba(3, 105, 161, 0.08);
+  --hx-panel-from: rgba(15, 23, 42, 0.022);
+  --hx-panel-to: rgba(15, 23, 42, 0.006);
+  --hx-scanline: rgba(15, 23, 42, 0.035);
+  --hx-noise-opacity: 0.03;
+  --hx-ghost: rgba(15, 23, 42, 0.02);
+  --hx-gradient-from: #0b1220;
+  --hx-gradient-to: #46536a;
+  --hx-scroll-thumb: #96a0ae;
+  --hx-scroll-thumb-hover: #74808f;
+}
+
+.dark {
+  color-scheme: dark;
 
   --background: #05070c;
   --foreground: #e7edf6;
@@ -53,22 +154,53 @@
   --sidebar-border: rgba(148, 163, 184, 0.14);
   --sidebar-ring: rgba(78, 201, 255, 0.55);
 
-  /* brand palette */
+  --hx-bg: #05070c;
+  --hx-surface: #080c12;
+  --hx-surface-2: #0b1017;
+
+  --hx-heading: #ffffff;
+  --hx-fg: #c9d5e3;
+  --hx-muted: #a4b2c5;
+  --hx-muted-2: #8593a6;
+  --hx-faint: #7f8ea3;
+  --hx-faint-2: #6b7a8d;
+
+  --hx-line: rgba(148, 163, 184, 0.16);
+  --hx-line-soft: rgba(148, 163, 184, 0.08);
+  --hx-line-strong: rgba(148, 163, 184, 0.3);
+
   --hx-cyan: #4ec9ff;
-  --hx-cyan-soft: #8fe0ff;
-  --hx-blue: #3b82f6;
+  --hx-cyan-soft: #9fd8ff;
+  --hx-blue: #4f8dff;
   --hx-green: #3fb950;
   --hx-amber: #f0b429;
   --hx-violet: #a78bfa;
-  --hx-line: rgba(148, 163, 184, 0.16);
-  --hx-line-strong: rgba(148, 163, 184, 0.3);
-  --hx-dim: rgba(148, 163, 184, 0.06);
+  --hx-hot: #c9f2ff;
+  --hx-dim: #6ea9d6;
+
   --hx-glow: rgba(78, 201, 255, 0.18);
   --hx-grid: rgba(148, 163, 184, 0.07);
-}
+  --hx-accent-glow: rgba(78, 201, 255, 0.5);
 
-.dark {
-  color-scheme: dark;
+  --hx-btn-from: #6ad4ff;
+  --hx-btn-to: #33b3f5;
+  --hx-btn-fg: #04141f;
+  --hx-btn-shadow: rgba(78, 201, 255, 0.75);
+
+  --hx-on-accent: #04141f;
+  --hx-on-accent-muted: rgba(4, 20, 31, 0.7);
+
+  --hx-cyan-line: rgba(78, 201, 255, 0.45);
+  --hx-cyan-tint: rgba(78, 201, 255, 0.07);
+  --hx-panel-from: rgba(255, 255, 255, 0.035);
+  --hx-panel-to: rgba(255, 255, 255, 0.01);
+  --hx-scanline: rgba(255, 255, 255, 0.028);
+  --hx-noise-opacity: 0.05;
+  --hx-ghost: rgba(255, 255, 255, 0.02);
+  --hx-gradient-from: #ffffff;
+  --hx-gradient-to: #9fb3cc;
+  --hx-scroll-thumb: #1b2431;
+  --hx-scroll-thumb-hover: #2b3a4d;
 }
 
 @theme inline {
@@ -210,8 +342,8 @@
   }
 
   ::selection {
-    background: rgba(78, 201, 255, 0.28);
-    color: #fff;
+    background: color-mix(in srgb, var(--hx-cyan) 30%, transparent);
+    color: var(--hx-heading);
   }
 
   ::-webkit-scrollbar {
@@ -219,15 +351,15 @@
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #05070c;
+    background: var(--hx-bg);
   }
   ::-webkit-scrollbar-thumb {
-    background: #1b2431;
-    border: 2px solid #05070c;
+    background: var(--hx-scroll-thumb);
+    border: 2px solid var(--hx-bg);
     border-radius: 99px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #2b3a4d;
+    background: var(--hx-scroll-thumb-hover);
   }
 
   :focus-visible {
@@ -243,15 +375,18 @@
 @layer components {
   .hx-container {
     width: 100%;
-    max-width: 1280px;
+    max-width: 1440px;
     margin-inline: auto;
-    padding-inline: 1.5rem;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
   }
 
-  @media (min-width: 768px) {
-    .hx-container {
-      padding-inline: 2.5rem;
-    }
+  /* Matches .hx-container's content box exactly, for full-height layers
+     that must line up with the page grid (hero stage, HUD). */
+  .hx-gutter {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
   }
 
   .hx-section {
@@ -309,7 +444,7 @@
   .hx-lede {
     font-size: clamp(1rem, 1.05vw, 1.125rem);
     line-height: 1.65;
-    color: #a4b2c5;
+    color: var(--hx-muted);
     max-width: 46ch;
   }
 
@@ -318,7 +453,7 @@
   }
 
   .hx-gradient-text {
-    background: linear-gradient(180deg, #ffffff 12%, #9fb3cc 100%);
+    background: linear-gradient(180deg, var(--hx-gradient-from) 12%, var(--hx-gradient-to) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -326,21 +461,21 @@
 
   .hx-accent-text {
     color: var(--hx-cyan);
-    text-shadow: 0 0 44px rgba(78, 201, 255, 0.45);
+    text-shadow: 0 0 44px var(--hx-accent-glow);
   }
 
   /* --- surfaces ---------------------------------------------------- */
 
   .hx-panel {
     position: relative;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01));
+    background: linear-gradient(180deg, var(--hx-panel-from), var(--hx-panel-to));
     border: 1px solid var(--hx-line);
     border-radius: 14px;
     backdrop-filter: blur(6px);
   }
 
   .hx-panel--solid {
-    background: #090d14;
+    background: var(--hx-surface);
     backdrop-filter: none;
   }
 
@@ -403,7 +538,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.05;
+    opacity: var(--hx-noise-opacity);
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
@@ -415,8 +550,8 @@
     pointer-events: none;
     background: repeating-linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.028) 0px,
-      rgba(255, 255, 255, 0.028) 1px,
+      var(--hx-scanline) 0px,
+      var(--hx-scanline) 1px,
       transparent 1px,
       transparent 3px
     );
@@ -443,25 +578,27 @@
   }
 
   .hx-btn-primary {
-    background: linear-gradient(180deg, #6ad4ff 0%, #33b3f5 100%);
-    color: #04141f;
-    box-shadow: 0 0 0 1px rgba(106, 212, 255, 0.5), 0 12px 34px -12px rgba(78, 201, 255, 0.75);
+    background: linear-gradient(180deg, var(--hx-btn-from) 0%, var(--hx-btn-to) 100%);
+    color: var(--hx-btn-fg);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--hx-cyan) 45%, transparent),
+      0 12px 34px -12px var(--hx-btn-shadow);
   }
   .hx-btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 0 1px rgba(106, 212, 255, 0.75), 0 20px 44px -14px rgba(78, 201, 255, 0.9);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--hx-cyan) 70%, transparent),
+      0 20px 44px -14px var(--hx-btn-shadow);
   }
 
   .hx-btn-ghost {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--hx-ghost);
     border-color: var(--hx-line-strong);
-    color: #dbe6f2;
+    color: var(--hx-fg);
   }
   .hx-btn-ghost:hover {
     transform: translateY(-2px);
-    border-color: rgba(78, 201, 255, 0.55);
-    background: rgba(78, 201, 255, 0.07);
-    color: #fff;
+    border-color: var(--hx-cyan-line);
+    background: var(--hx-cyan-tint);
+    color: var(--hx-heading);
   }
 
   /* --- marquee ------------------------------------------------------ */
@@ -483,15 +620,33 @@
 
   .hx-reveal {
     opacity: 0;
-    transform: translate3d(0, 26px, 0);
-    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translate3d(0, 18px, 0);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     transition-delay: var(--hx-delay, 0ms);
-    will-change: opacity, transform;
   }
   .hx-reveal.is-visible {
     opacity: 1;
     transform: none;
+  }
+
+  /* Masked line reveal — used for display headlines. The line slides up from
+     behind its own clip so there is no floating or blur. */
+  .hx-rise {
+    display: block;
+    overflow: hidden;
+    padding-block: 0.03em;
+  }
+  .hx-rise > i {
+    display: block;
+    font-style: normal;
+    transform: translate3d(0, 112%, 0);
+    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--hx-delay, 0ms);
+    will-change: transform;
+  }
+  .hx-rise.is-visible > i {
+    transform: translate3d(0, 0, 0);
   }
 
   /* --- caret -------------------------------------------------------- */
@@ -526,6 +681,9 @@
   }
   .hx-reveal {
     opacity: 1;
+    transform: none;
+  }
+  .hx-rise > i {
     transform: none;
   }
 }

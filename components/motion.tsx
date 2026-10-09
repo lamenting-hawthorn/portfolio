@@ -38,13 +38,15 @@ export function RevealObserver() {
     };
 
     const add = (el: Element) => {
-      if (pending.has(el)) return;
+      if (pending.has(el) || el.classList.contains("is-visible")) return;
       pending.add(el);
       schedule();
     };
 
     const scan = (root: ParentNode) => {
-      root.querySelectorAll<HTMLElement>(".hx-reveal:not(.is-visible)").forEach(add);
+      root
+        .querySelectorAll<HTMLElement>(".hx-reveal:not(.is-visible), .hx-rise:not(.is-visible)")
+        .forEach(add);
     };
 
     scan(document);

@@ -154,7 +154,7 @@ export default function DeploymentsPage() {
       </Section>
 
       {/* Pipeline */}
-      <Section id="delivery" className="border-y border-white/8 bg-[#06090f]">
+      <Section id="delivery" className="border-y border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <div className="hx-grid-bg opacity-50" aria-hidden />
         <Container className="relative">
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
@@ -192,16 +192,16 @@ export default function DeploymentsPage() {
             {SLOS.map((s, i) => (
               <div
                 key={s.metric}
-                className="hx-reveal group flex flex-col gap-2 border border-white/10 bg-[#080c12] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#4ec9ff]/35"
+                className="hx-reveal group flex flex-col gap-2 border border-[var(--hx-line)] bg-[var(--hx-surface)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--hx-cyan)]/35"
                 style={{ "--hx-delay": `${i * 60}ms` } as CSSProperties}
               >
-                <span className="hx-mono text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
+                <span className="hx-mono text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
                   {s.metric}
                 </span>
-                <strong className="hx-display text-[1.45rem] font-medium text-[#4ec9ff]">
+                <strong className="hx-display text-[1.45rem] font-medium text-[var(--hx-cyan)]">
                   {s.target}
                 </strong>
-                <p className="text-[13.5px] leading-relaxed text-[#8593a6]">{s.note}</p>
+                <p className="text-[13.5px] leading-relaxed text-[var(--hx-muted-2)]">{s.note}</p>
               </div>
             ))}
           </div>
@@ -209,7 +209,7 @@ export default function DeploymentsPage() {
       </Section>
 
       {/* Security */}
-      <Section id="security" className="border-y border-white/8 bg-[#06090f]">
+      <Section id="security" className="border-y border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr]">
             <div>
@@ -227,10 +227,10 @@ export default function DeploymentsPage() {
                 ].map((x) => (
                   <div
                     key={x.t}
-                    className="hx-reveal flex items-center gap-3 border border-white/10 bg-[#0b1017] px-4 py-3"
+                    className="hx-reveal flex items-center gap-3 border border-[var(--hx-line)] bg-[var(--hx-surface-2)] px-4 py-3"
                   >
-                    <span className="text-[#3fb950]">{x.icon}</span>
-                    <span className="hx-mono text-[11.5px] tracking-[0.08em] text-[#9aa8ba]">
+                    <span className="text-[var(--hx-green)]">{x.icon}</span>
+                    <span className="hx-mono text-[11.5px] tracking-[0.08em] text-[var(--hx-muted)]">
                       {x.t}
                     </span>
                   </div>
@@ -240,11 +240,11 @@ export default function DeploymentsPage() {
 
             <Accordion type="single" collapsible className="w-full">
               {FAQ.map((f, i) => (
-                <AccordionItem key={f.q} value={`faq-${i}`} className="border-white/10">
-                  <AccordionTrigger className="py-5 text-left text-[15px] font-medium text-white hover:text-[#4ec9ff] hover:no-underline">
+                <AccordionItem key={f.q} value={`faq-${i}`} className="border-[var(--hx-line)]">
+                  <AccordionTrigger className="py-5 text-left text-[15px] font-medium text-[var(--hx-heading)] hover:text-[var(--hx-cyan)] hover:no-underline">
                     {f.q}
                   </AccordionTrigger>
-                  <AccordionContent className="text-[14px] leading-relaxed text-[#8593a6]">
+                  <AccordionContent className="text-[14px] leading-relaxed text-[var(--hx-muted-2)]">
                     {f.a}
                   </AccordionContent>
                 </AccordionItem>
@@ -256,10 +256,10 @@ export default function DeploymentsPage() {
 
       <Section bleed className="py-12">
         <Container className="mb-6 flex items-center gap-4">
-          <span className="hx-mono text-[10px] tracking-[0.18em] text-[#5d6b7e] uppercase">
+          <span className="hx-mono text-[10px] tracking-[0.18em] text-[var(--hx-faint)] uppercase">
             Platforms we deploy to
           </span>
-          <span className="h-px flex-1 bg-white/10" />
+          <span className="h-px flex-1 bg-[var(--hx-line)]" />
         </Container>
         <Marquee
           reverse
@@ -267,7 +267,7 @@ export default function DeploymentsPage() {
             (s) => (
               <span
                 key={s}
-                className="hx-mono text-[13px] tracking-[0.1em] whitespace-nowrap text-[#8593a6] uppercase"
+                className="hx-mono text-[13px] tracking-[0.1em] whitespace-nowrap text-[var(--hx-muted-2)] uppercase"
               >
                 {s}
               </span>

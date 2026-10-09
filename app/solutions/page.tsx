@@ -1,12 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Clock, Layers, ShieldCheck, Sparkles, Wrench } from "lucide-react";
-import type { CSSProperties } from "react";
 import { Container, Section, SectionHeading } from "@/components/section";
 import { CTABand } from "@/components/blocks";
 import { PageHero, TerminalPanel } from "@/components/page-hero";
 import { FeatureCard, StepCard } from "@/components/cards";
-
-const delay = (ms: number) => ({ "--hx-delay": `${ms}ms` }) as CSSProperties;
+import { delay } from "@/lib/delay";
 
 const ENTRY_POINTS = [
   {
@@ -138,7 +136,7 @@ export default function SolutionsPage() {
       </Section>
 
       {/* Engagement models */}
-      <Section id="engagements" className="border-y border-white/8 bg-[#06090f]">
+      <Section id="engagements" className="border-y border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <div className="hx-grid-bg opacity-50" aria-hidden />
         <Container className="relative">
           <SectionHeading
@@ -152,38 +150,38 @@ export default function SolutionsPage() {
             {ENGAGEMENTS.map((e, i) => (
               <article
                 key={e.n}
-                className="hx-reveal group relative flex flex-col overflow-hidden border bg-[#080c12] p-7 transition-all duration-300 hover:-translate-y-1"
+                className="hx-reveal group relative flex flex-col overflow-hidden border bg-[var(--hx-surface)] p-7 transition-all duration-300 hover:-translate-y-1"
                 style={{
                   ...delay(i * 90),
-                  borderColor: e.featured ? "rgba(78,201,255,0.45)" : "rgba(255,255,255,0.1)",
+                  borderColor: e.featured ? "var(--hx-cyan-line)" : "var(--hx-line)",
                 }}
               >
                 {e.featured && (
-                  <span className="absolute top-0 right-0 bg-[#4ec9ff] px-3 py-1 text-[9px] font-semibold tracking-[0.16em] text-[#04141f] uppercase">
+                  <span className="absolute top-0 right-0 bg-[var(--hx-cyan)] px-3 py-1 text-[9px] font-semibold tracking-[0.16em] text-[var(--hx-on-accent)] uppercase">
                     Most chosen
                   </span>
                 )}
 
                 <div className="flex items-center gap-3">
-                  <span className="hx-mono text-[11px] font-semibold tracking-[0.2em] text-[#4ec9ff]">
+                  <span className="hx-mono text-[11px] font-semibold tracking-[0.2em] text-[var(--hx-cyan)]">
                     {e.n}
                   </span>
-                  <span className="h-px flex-1 bg-white/10" />
-                  <span className="hx-mono text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
+                  <span className="h-px flex-1 bg-[var(--hx-line)]" />
+                  <span className="hx-mono text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
                     {e.meta}
                   </span>
                 </div>
 
-                <h3 className="hx-display mt-6 text-[1.6rem] text-white">{e.title}</h3>
-                <p className="hx-mono mt-1 text-[11px] tracking-[0.14em] text-[#4ec9ff] uppercase">
+                <h3 className="hx-display mt-6 text-[1.6rem] text-[var(--hx-heading)]">{e.title}</h3>
+                <p className="hx-mono mt-1 text-[11px] tracking-[0.14em] text-[var(--hx-cyan)] uppercase">
                   {e.price}
                 </p>
-                <p className="mt-4 text-[14px] leading-relaxed text-[#8593a6]">{e.body}</p>
+                <p className="mt-4 text-[14px] leading-relaxed text-[var(--hx-muted-2)]">{e.body}</p>
 
-                <ul className="mt-6 flex flex-col gap-2.5 border-t border-white/10 pt-5">
+                <ul className="mt-6 flex flex-col gap-2.5 border-t border-[var(--hx-line)] pt-5">
                   {e.points.map((p) => (
-                    <li key={p} className="flex items-start gap-2.5 text-[13.5px] text-[#9aa8ba]">
-                      <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-[#3fb950]" />
+                    <li key={p} className="flex items-start gap-2.5 text-[13.5px] text-[var(--hx-muted)]">
+                      <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-[var(--hx-green)]" />
                       {p}
                     </li>
                   ))}
@@ -214,13 +212,13 @@ export default function SolutionsPage() {
               {DELIVERABLES.map((d, i) => (
                 <li
                   key={d}
-                  className="hx-reveal group flex items-start gap-5 border-b border-white/10 py-5 first:border-t"
+                  className="hx-reveal group flex items-start gap-5 border-b border-[var(--hx-line)] py-5 first:border-t"
                   style={delay(i * 60)}
                 >
-                  <span className="hx-mono mt-0.5 w-8 shrink-0 text-[11px] tracking-[0.12em] text-[#3f4c5c]">
+                  <span className="hx-mono mt-0.5 w-8 shrink-0 text-[11px] tracking-[0.12em] text-[var(--hx-faint-2)]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-[15px] leading-relaxed text-[#a4b2c5] transition-colors group-hover:text-white">
+                  <span className="text-[15px] leading-relaxed text-[var(--hx-muted)] transition-colors group-hover:text-[var(--hx-heading)]">
                     {d}
                   </span>
                 </li>
@@ -231,7 +229,7 @@ export default function SolutionsPage() {
       </Section>
 
       {/* Timeline */}
-      <Section id="timeline" className="border-t border-white/8 bg-[#06090f]">
+      <Section id="timeline" className="border-t border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <Container>
           <SectionHeading
             eyebrow="04 / The first 10 weeks"

@@ -62,27 +62,27 @@ const STACK_LAYERS = [
   {
     layer: "Experience",
     items: ["Chat / API", "Workflow triggers", "Human review console"],
-    tone: "text-[#4ec9ff]",
+    tone: "text-[var(--hx-cyan)]",
   },
   {
     layer: "Orchestration",
     items: ["Planner", "Router", "State machine", "Retry & resume"],
-    tone: "text-[#3fb950]",
+    tone: "text-[var(--hx-green)]",
   },
   {
     layer: "Capability",
     items: ["Tool registry", "MCP servers", "Retrieval", "Memory tiers"],
-    tone: "text-[#4f8dff]",
+    tone: "text-[var(--hx-blue)]",
   },
   {
     layer: "Control",
     items: ["Policy gates", "Permissions", "Budget & rate limits", "Approval steps"],
-    tone: "text-[#f0b429]",
+    tone: "text-[var(--hx-amber)]",
   },
   {
     layer: "Evidence",
     items: ["Traces", "Evaluations", "Cost & latency", "Audit log"],
-    tone: "text-[#a78bfa]",
+    tone: "text-[var(--hx-violet)]",
   },
 ];
 
@@ -178,22 +178,22 @@ export default function AgentsPage() {
             {ANATOMY.map((a, i) => (
               <article
                 key={a.key}
-                className="hx-reveal group relative flex h-full flex-col gap-3 border border-white/10 bg-[#080c12] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#3fb950]/40 hover:bg-[#0a111a]"
+                className="hx-reveal group relative flex h-full flex-col gap-3 border border-[var(--hx-line)] bg-[var(--hx-surface)] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--hx-green)]/40 hover:bg-[var(--hx-surface-2)]"
                 style={{ "--hx-delay": `${i * 70}ms` } as CSSProperties}
               >
                 <div className="flex items-center justify-between">
-                  <span className="hx-mono text-[10px] font-semibold tracking-[0.2em] text-[#3fb950]">
+                  <span className="hx-mono text-[10px] font-semibold tracking-[0.2em] text-[var(--hx-green)]">
                     {a.n}
                   </span>
-                  <span className="text-[#3fb950]/70 transition-colors group-hover:text-[#3fb950]">
+                  <span className="text-[var(--hx-green)]/70 transition-colors group-hover:text-[var(--hx-green)]">
                     {a.icon}
                   </span>
                 </div>
-                <h3 className="hx-mono text-[13px] font-semibold tracking-[0.1em] text-white uppercase">
+                <h3 className="hx-mono text-[13px] font-semibold tracking-[0.1em] text-[var(--hx-heading)] uppercase">
                   {a.title}
                 </h3>
-                <p className="text-[13.5px] leading-relaxed text-[#8593a6]">{a.body}</p>
-                <p className="hx-mono mt-auto border-t border-dashed border-white/12 pt-3 text-[10px] leading-relaxed tracking-[0.06em] text-[#4d5a6b]">
+                <p className="text-[13.5px] leading-relaxed text-[var(--hx-muted-2)]">{a.body}</p>
+                <p className="hx-mono mt-auto border-t border-dashed border-[var(--hx-line-strong)] pt-3 text-[10px] leading-relaxed tracking-[0.06em] text-[var(--hx-faint)]">
                   {a.detail}
                 </p>
               </article>
@@ -203,7 +203,7 @@ export default function AgentsPage() {
       </Section>
 
       {/* Architecture stack */}
-      <Section id="architecture" className="border-y border-white/8 bg-[#06090f]">
+      <Section id="architecture" className="border-y border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <div className="hx-grid-bg opacity-60" aria-hidden />
         <Container className="relative">
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
@@ -219,19 +219,19 @@ export default function AgentsPage() {
               {STACK_LAYERS.map((l, i) => (
                 <div
                   key={l.layer}
-                  className="hx-reveal group relative flex flex-col gap-3 border border-white/10 bg-[#080c12] p-5 transition-colors duration-300 hover:border-white/25 sm:flex-row sm:items-center sm:gap-6"
+                  className="hx-reveal group relative flex flex-col gap-3 border border-[var(--hx-line)] bg-[var(--hx-surface)] p-5 transition-colors duration-300 hover:border-[var(--hx-line-strong)] sm:flex-row sm:items-center sm:gap-6"
                   style={{ "--hx-delay": `${i * 70}ms` } as CSSProperties}
                 >
                   <span className="hx-mono w-32 shrink-0 text-[10.5px] font-semibold tracking-[0.16em] uppercase">
                     <span className={l.tone}>{String(i + 1).padStart(2, "0")}</span>{" "}
-                    <span className="text-[#8593a6]">{l.layer}</span>
+                    <span className="text-[var(--hx-muted-2)]">{l.layer}</span>
                   </span>
-                  <span className="h-px w-full bg-white/8 sm:w-px sm:self-stretch" />
+                  <span className="h-px w-full bg-[var(--hx-line-soft)] sm:w-px sm:self-stretch" />
                   <div className="flex flex-wrap gap-2">
                     {l.items.map((it) => (
                       <span
                         key={it}
-                        className="hx-mono rounded-md border border-white/10 bg-[#0b1017] px-2.5 py-1 text-[11px] text-[#9aa8ba] transition-colors group-hover:border-white/20"
+                        className="hx-mono rounded-md border border-[var(--hx-line)] bg-[var(--hx-surface-2)] px-2.5 py-1 text-[11px] text-[var(--hx-muted)] transition-colors group-hover:border-[var(--hx-line-strong)]"
                       >
                         {it}
                       </span>
@@ -256,21 +256,21 @@ export default function AgentsPage() {
             {USE_CASES.map((u, i) => (
               <article
                 key={u.index}
-                className="hx-reveal group flex h-full flex-col gap-3 border border-white/10 bg-[#080c12] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#4ec9ff]/35"
+                className="hx-reveal group flex h-full flex-col gap-3 border border-[var(--hx-line)] bg-[var(--hx-surface)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--hx-cyan)]/35"
                 style={{ "--hx-delay": `${i * 60}ms` } as CSSProperties}
               >
-                <span className="hx-mono text-[10px] font-semibold tracking-[0.2em] text-[#4ec9ff]">
+                <span className="hx-mono text-[10px] font-semibold tracking-[0.2em] text-[var(--hx-cyan)]">
                   {u.index}
                 </span>
-                <h3 className="text-[1.1rem] leading-snug font-semibold tracking-[-0.02em] text-white">
+                <h3 className="text-[1.1rem] leading-snug font-semibold tracking-[-0.02em] text-[var(--hx-heading)]">
                   {u.title}
                 </h3>
-                <p className="text-[14px] leading-relaxed text-[#8593a6]">{u.body}</p>
+                <p className="text-[14px] leading-relaxed text-[var(--hx-muted-2)]">{u.body}</p>
                 <div className="mt-auto flex flex-wrap gap-1.5 pt-3">
                   {u.tags.map((t) => (
                     <span
                       key={t}
-                      className="hx-mono rounded-full border border-white/10 px-2.5 py-1 text-[10px] tracking-[0.08em] text-[#6f8296]"
+                      className="hx-mono rounded-full border border-[var(--hx-line)] px-2.5 py-1 text-[10px] tracking-[0.08em] text-[var(--hx-muted-2)]"
                     >
                       {t}
                     </span>
@@ -283,7 +283,7 @@ export default function AgentsPage() {
       </Section>
 
       {/* Guardrails */}
-      <Section id="guardrails" className="border-t border-white/8 bg-[#06090f]">
+      <Section id="guardrails" className="border-t border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
@@ -302,11 +302,11 @@ export default function AgentsPage() {
               {GUARDRAILS.map((g, i) => (
                 <li
                   key={g}
-                  className="hx-reveal group flex items-start gap-4 border-b border-white/10 py-4 first:border-t"
+                  className="hx-reveal group flex items-start gap-4 border-b border-[var(--hx-line)] py-4 first:border-t"
                   style={{ "--hx-delay": `${i * 55}ms` } as CSSProperties}
                 >
-                  <Lock className="mt-1 size-4 shrink-0 text-[#f0b429]" />
-                  <span className="text-[15px] leading-relaxed text-[#a4b2c5] transition-colors group-hover:text-white">
+                  <Lock className="mt-1 size-4 shrink-0 text-[var(--hx-amber)]" />
+                  <span className="text-[15px] leading-relaxed text-[var(--hx-muted)] transition-colors group-hover:text-[var(--hx-heading)]">
                     {g}
                   </span>
                 </li>
@@ -315,30 +315,30 @@ export default function AgentsPage() {
           </div>
 
           <div className="mt-14 grid gap-5 sm:grid-cols-3">
-            <div className="hx-reveal border border-white/10 bg-[#080c12] p-6">
-              <LineChart className="size-5 text-[#4ec9ff]" />
-              <strong className="hx-display mt-4 block text-[1.6rem] font-medium text-white">
+            <div className="hx-reveal border border-[var(--hx-line)] bg-[var(--hx-surface)] p-6">
+              <LineChart className="size-5 text-[var(--hx-cyan)]" />
+              <strong className="hx-display mt-4 block text-[1.6rem] font-medium text-[var(--hx-heading)]">
                 100%
               </strong>
-              <span className="hx-mono mt-1 block text-[10px] tracking-[0.14em] text-[#5d6b7e] uppercase">
+              <span className="hx-mono mt-1 block text-[10px] tracking-[0.14em] text-[var(--hx-faint)] uppercase">
                 of runs traced end to end
               </span>
             </div>
-            <div className="hx-reveal border border-white/10 bg-[#080c12] p-6" style={{ "--hx-delay": "80ms" } as CSSProperties}>
-              <Database className="size-5 text-[#3fb950]" />
-              <strong className="hx-display mt-4 block text-[1.6rem] font-medium text-white">
+            <div className="hx-reveal border border-[var(--hx-line)] bg-[var(--hx-surface)] p-6" style={{ "--hx-delay": "80ms" } as CSSProperties}>
+              <Database className="size-5 text-[var(--hx-green)]" />
+              <strong className="hx-display mt-4 block text-[1.6rem] font-medium text-[var(--hx-heading)]">
                 3 tiers
               </strong>
-              <span className="hx-mono mt-1 block text-[10px] tracking-[0.14em] text-[#5d6b7e] uppercase">
+              <span className="hx-mono mt-1 block text-[10px] tracking-[0.14em] text-[var(--hx-faint)] uppercase">
                 of memory: working, episodic, semantic
               </span>
             </div>
-            <div className="hx-reveal border border-white/10 bg-[#080c12] p-6" style={{ "--hx-delay": "160ms" } as CSSProperties}>
-              <CircleStop className="size-5 text-[#f0b429]" />
-              <strong className="hx-display mt-4 block text-[1.6rem] font-medium text-white">
+            <div className="hx-reveal border border-[var(--hx-line)] bg-[var(--hx-surface)] p-6" style={{ "--hx-delay": "160ms" } as CSSProperties}>
+              <CircleStop className="size-5 text-[var(--hx-amber)]" />
+              <strong className="hx-display mt-4 block text-[1.6rem] font-medium text-[var(--hx-heading)]">
                 Always
               </strong>
-              <span className="hx-mono mt-1 block text-[10px] tracking-[0.14em] text-[#5d6b7e] uppercase">
+              <span className="hx-mono mt-1 block text-[10px] tracking-[0.14em] text-[var(--hx-faint)] uppercase">
                 a defined stop condition and rollback path
               </span>
             </div>

@@ -43,7 +43,7 @@ function IconModel() {
       )}
       {nodes.map(([x, y], i) => (
         <g key={i}>
-          <circle cx={x} cy={y} r="4.6" fill="#05070c" stroke="currentColor" strokeWidth="1.6" />
+          <circle cx={x} cy={y} r="4.6" fill="var(--hx-bg)" stroke="currentColor" strokeWidth="1.6" />
           <circle cx={x} cy={y} r="1.6" fill="currentColor" />
         </g>
       ))}
@@ -94,7 +94,7 @@ const STAGES = [
     icon: <IconData />,
     items: ["text", "documents", "logs", "apis"],
     note: "private, governed, yours",
-    accent: "text-[#4ec9ff]",
+    accent: "text-[var(--hx-cyan)]",
   },
   {
     id: "02",
@@ -102,7 +102,7 @@ const STAGES = [
     icon: <IconModel />,
     items: ["domain specific", "higher accuracy", "better reasoning"],
     note: "trained on your distribution",
-    accent: "text-[#4ec9ff]",
+    accent: "text-[var(--hx-cyan)]",
   },
   {
     id: "03",
@@ -110,7 +110,7 @@ const STAGES = [
     icon: <IconAgent />,
     items: ["plan", "reason", "use tools", "take action", "self-improve"],
     note: "grounded, supervised, observable",
-    accent: "text-[#3fb950]",
+    accent: "text-[var(--hx-green)]",
   },
   {
     id: "04",
@@ -118,7 +118,7 @@ const STAGES = [
     icon: <IconDeploy />,
     items: ["cloud", "on-prem", "hybrid", "scalable", "secure"],
     note: "inside your pipeline",
-    accent: "text-[#4f8dff]",
+    accent: "text-[var(--hx-blue)]",
   },
 ];
 
@@ -139,7 +139,7 @@ function Connector({ vertical = false }: { vertical?: boolean }) {
       >
         <path
           d={vertical ? "M12 2V50" : "M2 12H58"}
-          stroke="#4ec9ff"
+          stroke="var(--hx-cyan)"
           strokeWidth="1.5"
           strokeDasharray="5 5"
           opacity="0.55"
@@ -147,7 +147,7 @@ function Connector({ vertical = false }: { vertical?: boolean }) {
         />
         <path
           d={vertical ? "M7 44l5 7 5-7" : "M52 7l6 5-6 5"}
-          stroke="#4ec9ff"
+          stroke="var(--hx-cyan)"
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -164,14 +164,14 @@ export function PipelineDiagram() {
       {STAGES.map((stage, i) => (
         <div key={stage.id} className="contents">
           <article
-            className="hx-reveal hx-panel hx-ticks group relative flex flex-1 flex-col bg-[#070a10]/70 p-5 transition-colors duration-300 hover:border-[#4ec9ff]/35 hover:bg-[#0a1119]"
+            className="hx-reveal hx-panel hx-ticks group relative flex flex-1 flex-col bg-[var(--hx-surface)]/70 p-5 transition-colors duration-300 hover:border-[var(--hx-cyan)]/35 hover:bg-[var(--hx-surface-2)]"
             style={{ "--hx-delay": `${i * 90}ms` } as CSSProperties}
           >
             <div className="flex items-start justify-between">
               <span className={cn("hx-mono text-[10px] font-semibold tracking-[0.2em]", stage.accent)}>
                 {stage.id}
               </span>
-              <span className="hx-mono text-[9px] tracking-[0.16em] text-[#3f4c5c] uppercase">
+              <span className="hx-mono text-[9px] tracking-[0.16em] text-[var(--hx-faint-2)] uppercase">
                 stage
               </span>
             </div>
@@ -180,15 +180,15 @@ export function PipelineDiagram() {
               {stage.icon}
             </div>
 
-            <h3 className="hx-mono mt-5 text-[12.5px] leading-snug font-semibold tracking-[0.1em] text-white uppercase">
+            <h3 className="hx-mono mt-5 text-[12.5px] leading-snug font-semibold tracking-[0.1em] text-[var(--hx-heading)] uppercase">
               {stage.title}
             </h3>
 
-            <ul className="mt-4 flex flex-col gap-1.5 border-t border-dashed border-white/12 pt-4">
+            <ul className="mt-4 flex flex-col gap-1.5 border-t border-dashed border-[var(--hx-line-strong)] pt-4">
               {stage.items.map((it) => (
                 <li
                   key={it}
-                  className="hx-mono flex items-center gap-2 text-[11.5px] text-[#8593a6]"
+                  className="hx-mono flex items-center gap-2 text-[11.5px] text-[var(--hx-muted-2)]"
                 >
                   <span className={cn("size-1 rounded-full", stage.accent, "bg-current")} />
                   {it}
@@ -196,7 +196,7 @@ export function PipelineDiagram() {
               ))}
             </ul>
 
-            <p className="hx-mono mt-auto pt-5 text-[10px] tracking-[0.08em] text-[#4d5a6b] lowercase">
+            <p className="hx-mono mt-auto pt-5 text-[10px] tracking-[0.08em] text-[var(--hx-faint)] lowercase">
               {stage.note}
             </p>
           </article>

@@ -2,18 +2,60 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Edges, Html, Line, Sparkles } from "@react-three/drei";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { onThemeChange } from "@/lib/theme";
+import { Suspense, createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 /* ------------------------------------------------------------------ */
-/*  Palette                                                            */
+/*  Palette — read from the CSS tokens so the scene follows the theme   */
 /* ------------------------------------------------------------------ */
 
-const CYAN = "#4ec9ff";
-const GREEN = "#3fb950";
-const BLUE = "#4f8dff";
-const DIM = "#42749a";
-const HOT = "#c9f2ff";
+type ScenePalette = {
+  cyan: string;
+  green: string;
+  blue: string;
+  dim: string;
+  hot: string;
+};
+
+const DEFAULT_PALETTE: ScenePalette = {
+  cyan: "#4ec9ff",
+  green: "#3fb950",
+  blue: "#4f8dff",
+  dim: "#42749a",
+  hot: "#c9f2ff",
+};
+
+const PaletteContext = createContext<ScenePalette>(DEFAULT_PALETTE);
+
+function useScenePalette(): ScenePalette {
+  const [palette, setPalette] = useState<ScenePalette>(DEFAULT_PALETTE);
+
+  useEffect(() => {
+    const read = () => {
+      const cs = getComputedStyle(document.documentElement);
+      const token = (name: string, fallback: string) =>
+        cs.getPropertyValue(name).trim() || fallback;
+      setPalette({
+        cyan: token("--hx-cyan", DEFAULT_PALETTE.cyan),
+        green: token("--hx-green", DEFAULT_PALETTE.green),
+        blue: token("--hx-blue", DEFAULT_PALETTE.blue),
+        dim: token("--hx-dim", DEFAULT_PALETTE.dim),
+        hot: token("--hx-hot", DEFAULT_PALETTE.hot),
+      });
+    };
+    read();
+    const stop = onThemeChange(read);
+    const mo = new MutationObserver(read);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => {
+      stop();
+      mo.disconnect();
+    };
+  }, []);
+
+  return palette;
+}
 
 /* Shared pointer state (normalised -0.5 .. 0.5) driven by the window. */
 const pointer = { x: 0, y: 0 };
@@ -23,22 +65,24 @@ const pointer = { x: 0, y: 0 };
 /* ------------------------------------------------------------------ */
 
 function DataStation() {
+  const { cyan, hot } = useContext(PaletteContext);
   const stack = [-0.78, -0.26, 0.26, 0.78];
   return (
     <group>
       {stack.map((y, i) => (
         <mesh key={i} position={[0, y, 0]}>
           <cylinderGeometry args={[1.05, 1.05, 0.36, 18, 1, false]} />
-          <meshBasicMaterial color={CYAN} transparent opacity={0.05} depthWrite={false} />
-          <Edges threshold={14} color={i === 1 ? HOT : CYAN} />
+          <meshBasicMaterial color={cyan} transparent opacity={0.05} depthWrite={false} />
+          <Edges threshold={14} color={i === 1 ? hot : cyan} />
         </mesh>
       ))}
-      <Sparkles count={18} scale={2.4} size={1.8} speed={0.25} color={CYAN} opacity={0.6} />
+      <Sparkles count={18} scale={2.4} size={1.8} speed={0.25} color={cyan} opacity={0.6} />
     </group>
   );
 }
 
 function ModelStation() {
+  const { cyan, hot } = useContext(PaletteContext);
   const shell = useRef<THREE.Mesh>(null);
   const core = useRef<THREE.Mesh>(null);
 
@@ -59,25 +103,20 @@ function ModelStation() {
     <group>
       <mesh ref={shell}>
         <icosahedronGeometry args={[1.3, 1]} />
-        <meshBasicMaterial color={CYAN} wireframe transparent opacity={0.55} depthWrite={false} />
+        <meshBasicMaterial color={cyan} wireframe transparent opacity={0.55} depthWrite={false} />
       </mesh>
       <mesh ref={core}>
         <icosahedronGeometry args={[0.66, 1]} />
-        <meshBasicMaterial
-          color={HOT}
-          transparent
-          opacity={0.5}
-          blending={THREE.AdditiveBlending}
-          depthWrite={false}
-        />
+        <meshBasicMaterial color={hot} transparent opacity={0.42} depthWrite={false} />
       </mesh>
-      <pointLight color={CYAN} intensity={3.4} distance={7} />
-      <Sparkles count={46} scale={3} size={2.6} speed={0.45} color={CYAN} opacity={0.85} />
+      <pointLight color={cyan} intensity={3.4} distance={7} />
+      <Sparkles count={46} scale={3} size={2.6} speed={0.45} color={cyan} opacity={0.85} />
     </group>
   );
 }
 
 function AgentStation() {
+  const { green, cyan, dim } = useContext(PaletteContext);
   const orbit = useRef<THREE.Group>(null);
 
   const nodes = useMemo(
@@ -90,10 +129,10 @@ function AgentStation() {
             number,
             number,
           ],
-          color: i % 2 === 0 ? GREEN : CYAN,
+          color: i % 2 === 0 ? green : cyan,
         };
       }),
-    []
+    [cyan, green]
   );
 
   useFrame(({ clock }) => {
@@ -104,9 +143,9 @@ function AgentStation() {
     <group>
       <mesh>
         <octahedronGeometry args={[0.72, 0]} />
-        <meshBasicMaterial color={GREEN} wireframe transparent opacity={0.9} depthWrite={false} />
+        <meshBasicMaterial color={green} wireframe transparent opacity={0.9} depthWrite={false} />
       </mesh>
-      <pointLight color={GREEN} intensity={2.6} distance={6} />
+      <pointLight color={green} intensity={2.6} distance={6} />
       <group ref={orbit}>
         {nodes.map((n, i) => (
           <group key={i}>
@@ -119,7 +158,7 @@ function AgentStation() {
                 [0, 0, 0],
                 n.pos,
               ]}
-              color={DIM}
+              color={dim}
               lineWidth={1}
               transparent
               opacity={0.75}
@@ -127,12 +166,13 @@ function AgentStation() {
           </group>
         ))}
       </group>
-      <Sparkles count={30} scale={3.4} size={2} speed={0.35} color={GREEN} opacity={0.7} />
+      <Sparkles count={30} scale={3.4} size={2} speed={0.35} color={green} opacity={0.7} />
     </group>
   );
 }
 
 function DeployStation() {
+  const { blue, hot } = useContext(PaletteContext);
   const ring = useRef<THREE.Mesh>(null);
 
   useFrame(({ clock }) => {
@@ -146,14 +186,14 @@ function DeployStation() {
     <group>
       <mesh>
         <boxGeometry args={[1.95, 1.95, 1.95]} />
-        <meshBasicMaterial color={BLUE} wireframe transparent opacity={0.6} depthWrite={false} />
+        <meshBasicMaterial color={blue} wireframe transparent opacity={0.6} depthWrite={false} />
       </mesh>
       <mesh ref={ring}>
         <torusGeometry args={[1.55, 0.028, 8, 56]} />
-        <meshBasicMaterial color={HOT} transparent opacity={0.85} depthWrite={false} />
+        <meshBasicMaterial color={hot} transparent opacity={0.85} depthWrite={false} />
       </mesh>
-      <pointLight color={BLUE} intensity={3} distance={7} />
-      <Sparkles count={40} scale={3.4} size={2.2} speed={0.3} color={BLUE} opacity={0.7} />
+      <pointLight color={blue} intensity={3} distance={7} />
+      <Sparkles count={40} scale={3.4} size={2.2} speed={0.3} color={blue} opacity={0.7} />
     </group>
   );
 }
@@ -163,6 +203,7 @@ function DeployStation() {
 /* ------------------------------------------------------------------ */
 
 function Connector({ from, to }: { from: [number, number, number]; to: [number, number, number] }) {
+  const { dim, hot } = useContext(PaletteContext);
   const dot = useRef<THREE.Mesh>(null);
   const a = useMemo(() => new THREE.Vector3(...from), [from]);
   const b = useMemo(() => new THREE.Vector3(...to), [to]);
@@ -178,7 +219,7 @@ function Connector({ from, to }: { from: [number, number, number]; to: [number, 
     <group>
       <Line
         points={[from, to]}
-        color={DIM}
+        color={dim}
         lineWidth={1.4}
         dashed
         dashSize={0.24}
@@ -189,7 +230,7 @@ function Connector({ from, to }: { from: [number, number, number]; to: [number, 
       />
       <mesh ref={dot}>
         <sphereGeometry args={[1, 12, 12]} />
-        <meshBasicMaterial color={HOT} transparent opacity={0.95} depthWrite={false} />
+        <meshBasicMaterial color={hot} transparent opacity={0.95} depthWrite={false} />
       </mesh>
     </group>
   );
@@ -218,11 +259,11 @@ function StationLabels() {
           style={{ pointerEvents: "none", userSelect: "none" }}
         >
           <div className="w-[150px] text-center">
-            <div className="hx-mono text-[9px] font-semibold tracking-[0.16em] whitespace-nowrap text-[#9fd8ff]">
+            <div className="hx-mono text-[9px] font-semibold tracking-[0.16em] whitespace-nowrap text-[var(--hx-cyan-soft)]">
               {s.label}
             </div>
-            <div className="mx-auto mt-1 h-px w-10 bg-[#4ec9ff]/35" />
-            <div className="hx-mono mt-1.5 flex flex-col gap-0.5 text-[8.5px] leading-tight tracking-[0.08em] text-[#6f8296]">
+            <div className="mx-auto mt-1 h-px w-10 bg-[var(--hx-cyan)]/35" />
+            <div className="hx-mono mt-1.5 flex flex-col gap-0.5 text-[8.5px] leading-tight tracking-[0.08em] text-[var(--hx-muted-2)]">
               {s.items.map((i) => (
                 <span key={i}>{i}</span>
               ))}
@@ -292,9 +333,11 @@ function Rig({ children }: { children: React.ReactNode }) {
 /* ------------------------------------------------------------------ */
 
 function Scene() {
+  const palette = useScenePalette();
   const xs = STATIONS.map((s) => s.x);
 
   return (
+    <PaletteContext.Provider value={palette}>
     <Suspense fallback={null}>
       <ambientLight intensity={0.55} />
       <Rig>
@@ -314,8 +357,9 @@ function Scene() {
         <StationLabels />
       </Rig>
 
-      <Sparkles count={70} position={[0, 0, -5]} scale={[26, 13, 3]} size={0.9} speed={0.16} color="#6ea9d6" opacity={0.45} />
+      <Sparkles count={70} position={[0, 0, -5]} scale={[26, 13, 3]} size={0.9} speed={0.16} color={palette.dim} opacity={0.45} />
     </Suspense>
+    </PaletteContext.Provider>
   );
 }
 
@@ -355,10 +399,10 @@ export function HeroScene() {
   if (!ready) {
     return (
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="hx-panel hx-ticks hx-mono flex w-[min(90%,560px)] flex-col gap-2 p-6 text-[11px] tracking-[0.1em] text-[#7e8da3]">
-          <span className="text-[#4ec9ff]">&gt; pipeline status</span>
+        <div className="hx-panel hx-ticks hx-mono flex w-[min(90%,560px)] flex-col gap-2 p-6 text-[11px] tracking-[0.1em] text-[var(--hx-muted-2)]">
+          <span className="text-[var(--hx-cyan)]">&gt; pipeline status</span>
           <span>data ── model ── agents ── deployment</span>
-          <span className="text-[#3fb950]">all systems nominal ▋</span>
+          <span className="text-[var(--hx-green)]">all systems nominal ▋</span>
         </div>
       </div>
     );

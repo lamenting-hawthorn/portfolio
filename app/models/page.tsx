@@ -171,8 +171,8 @@ export default function ModelsPage() {
       </Section>
 
       {/* Methods */}
-      <Section id="methods" className="border-y border-white/8 bg-[#06090f]">
-        <div className="hx-glow right-[-8rem] top-[10%] size-[30rem] bg-[#0b2f52]" aria-hidden />
+      <Section id="methods" className="border-y border-[var(--hx-line)] bg-[var(--hx-bg)]">
+        <div className="hx-glow right-[-8rem] top-[10%] size-[30rem] bg-[var(--hx-glow)]" aria-hidden />
         <Container className="relative">
           <SectionHeading
             eyebrow="02 / How we train"
@@ -182,12 +182,12 @@ export default function ModelsPage() {
           />
 
           <Tabs defaultValue="sft" className="mt-12">
-            <TabsList className="hx-mono h-auto w-full flex-wrap justify-start gap-1 rounded-lg border border-white/10 bg-[#0a0e15] p-1.5">
+            <TabsList className="hx-mono h-auto w-full flex-wrap justify-start gap-1 rounded-lg border border-[var(--hx-line)] bg-[var(--hx-surface)] p-1.5">
               {METHODS.map((m) => (
                 <TabsTrigger
                   key={m.value}
                   value={m.value}
-                  className="hx-mono rounded-md px-4 py-2 text-[11px] tracking-[0.14em] text-[#8593a6] uppercase data-[state=active]:bg-[#121a25] data-[state=active]:text-[#4ec9ff]"
+                  className="hx-mono rounded-md px-4 py-2 text-[11px] tracking-[0.14em] text-[var(--hx-muted-2)] uppercase data-[state=active]:bg-[var(--hx-surface-2)] data-[state=active]:text-[var(--hx-cyan)]"
                 >
                   {m.label}
                 </TabsTrigger>
@@ -196,18 +196,18 @@ export default function ModelsPage() {
 
             {METHODS.map((m) => (
               <TabsContent key={m.value} value={m.value} className="mt-6">
-                <div className="hx-panel hx-ticks grid gap-8 bg-[#070a10] p-7 lg:grid-cols-[0.9fr_1.1fr] lg:p-9">
+                <div className="hx-panel hx-ticks grid gap-8 bg-[var(--hx-surface)] p-7 lg:grid-cols-[0.9fr_1.1fr] lg:p-9">
                   <div className="flex flex-col gap-4">
                     <span className="hx-eyebrow">{m.label}</span>
-                    <h3 className="hx-display text-[clamp(1.5rem,2.6vw,2.1rem)] text-white">
+                    <h3 className="hx-display text-[clamp(1.5rem,2.6vw,2.1rem)] text-[var(--hx-heading)]">
                       {m.title}
                     </h3>
-                    <p className="text-[15px] leading-relaxed text-[#93a2b6]">{m.body}</p>
+                    <p className="text-[15px] leading-relaxed text-[var(--hx-muted)]">{m.body}</p>
                   </div>
-                  <ul className="flex flex-col gap-3 border-l-0 pt-2 lg:border-l lg:border-white/10 lg:pt-0 lg:pl-8">
+                  <ul className="flex flex-col gap-3 border-l-0 pt-2 lg:border-l lg:border-[var(--hx-line)] lg:pt-0 lg:pl-8">
                     {m.points.map((p) => (
-                      <li key={p} className="flex gap-3 text-[14px] leading-relaxed text-[#8593a6]">
-                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#4ec9ff]" />
+                      <li key={p} className="flex gap-3 text-[14px] leading-relaxed text-[var(--hx-muted-2)]">
+                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[var(--hx-cyan)]" />
                         {p}
                       </li>
                     ))}
@@ -243,7 +243,7 @@ export default function ModelsPage() {
       </Section>
 
       {/* Eval gates */}
-      <Section id="evaluation" className="border-y border-white/8 bg-[#06090f]">
+      <Section id="evaluation" className="border-y border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <Container>
           <SectionHeading
             eyebrow="04 / Evaluation"
@@ -251,27 +251,27 @@ export default function ModelsPage() {
             lede="A number nobody agreed on is not a metric. These are set with you before the first run and enforced automatically thereafter."
           />
 
-          <div className="hx-reveal mt-12 overflow-x-auto rounded-xl border border-white/10 [&_td]:border-white/8 [&_th]:border-white/8">
+          <div className="hx-reveal mt-12 overflow-x-auto rounded-xl border border-[var(--hx-line)] [&_td]:border-[var(--hx-line)] [&_th]:border-[var(--hx-line)]">
             <Table>
               <TableHeader>
-                <TableRow className="bg-[#0a0e15] hover:bg-[#0a0e15]">
-                  <TableHead className="hx-mono text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
+                <TableRow className="bg-[var(--hx-surface)] hover:bg-[var(--hx-surface)]">
+                  <TableHead className="hx-mono text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
                     Metric
                   </TableHead>
-                  <TableHead className="hx-mono text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
+                  <TableHead className="hx-mono text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
                     What it measures
                   </TableHead>
-                  <TableHead className="hx-mono text-right text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
+                  <TableHead className="hx-mono text-right text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
                     Release gate
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {GATES.map((g) => (
-                  <TableRow key={g.metric} className="hover:bg-white/[0.03]">
-                    <TableCell className="font-medium text-white">{g.metric}</TableCell>
-                    <TableCell className="text-[#8593a6]">{g.measures}</TableCell>
-                    <TableCell className="hx-mono text-right text-[12px] text-[#3fb950]">
+                  <TableRow key={g.metric} className="hover:bg-[var(--hx-line-soft)]">
+                    <TableCell className="font-medium text-[var(--hx-heading)]">{g.metric}</TableCell>
+                    <TableCell className="text-[var(--hx-muted-2)]">{g.measures}</TableCell>
+                    <TableCell className="hx-mono text-right text-[12px] text-[var(--hx-green)]">
                       {g.gate}
                     </TableCell>
                   </TableRow>
@@ -285,17 +285,17 @@ export default function ModelsPage() {
       {/* Serving stack */}
       <Section bleed className="py-12">
         <Container className="mb-6 flex items-center gap-4">
-          <span className="hx-mono text-[10px] tracking-[0.18em] text-[#5d6b7e] uppercase">
+          <span className="hx-mono text-[10px] tracking-[0.18em] text-[var(--hx-faint)] uppercase">
             Serving & training stack
           </span>
-          <span className="h-px flex-1 bg-white/10" />
+          <span className="h-px flex-1 bg-[var(--hx-line)]" />
         </Container>
         <Marquee
           items={["PyTorch", "TRL", "vLLM", "Hugging Face", "MLflow", "Weights & Biases", "Ray", "DeepSpeed", "ONNX", "TensorRT", "Airflow", "Postgres"].map(
             (s) => (
               <span
                 key={s}
-                className="hx-mono text-[13px] tracking-[0.1em] whitespace-nowrap text-[#8593a6] uppercase"
+                className="hx-mono text-[13px] tracking-[0.1em] whitespace-nowrap text-[var(--hx-muted-2)] uppercase"
               >
                 {s}
               </span>

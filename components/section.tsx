@@ -46,7 +46,7 @@ export function Eyebrow({
       className={cn(
         "hx-eyebrow hx-reveal",
         tone === "green" && "hx-eyebrow--green",
-        tone === "plain" && "!text-[#7e8da3]",
+        tone === "plain" && "!text-[var(--hx-muted-2)]",
         bracket && "hx-eyebrow--bracket",
         className
       )}
@@ -84,7 +84,7 @@ export function SectionHeading({
       <Eyebrow tone={eyebrowTone} bracket={bracket}>
         {eyebrow}
       </Eyebrow>
-      <h2 className="hx-title hx-reveal max-w-4xl text-[clamp(2.1rem,4.6vw,3.5rem)] text-white [--hx-delay:70ms]">
+      <h2 className="hx-title hx-reveal max-w-4xl text-[clamp(2.1rem,4.6vw,3.5rem)] text-[var(--hx-heading)] [--hx-delay:70ms]">
         {title}
       </h2>
       {lede && <p className="hx-lede hx-reveal [--hx-delay:150ms]">{lede}</p>}

@@ -104,7 +104,7 @@ export default function Home() {
       {/* ---------------------------------------------------------- */}
       {/*  Pipeline                                                    */}
       {/* ---------------------------------------------------------- */}
-      <Section id="pipeline" className="border-b border-white/8 bg-[#06090f]">
+      <Section id="pipeline" className="border-b border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
             <SectionHeading
@@ -114,21 +114,21 @@ export default function Home() {
               lede="Most AI pilots die between the notebook and the org. We own the whole path — the data contract, the model, the agent runtime and the deployment target."
             />
 
-            <div className="hx-panel hx-reveal relative overflow-hidden bg-[#070a10] p-5 [--hx-delay:180ms]">
+            <div className="hx-panel hx-reveal relative overflow-hidden bg-[var(--hx-surface)] p-5 [--hx-delay:180ms]">
               <div className="hx-mono flex flex-col gap-2 text-[12px] leading-relaxed">
-                <span className="text-[#4d5a6b]">
+                <span className="text-[var(--hx-faint)]">
                   $ hawthorn deploy --pipeline production
                 </span>
-                <span className="text-[#3fb950]">
-                  ✓ data contract validated <span className="text-[#4d5a6b]">· 4 sources</span>
+                <span className="text-[var(--hx-green)]">
+                  ✓ data contract validated <span className="text-[var(--hx-faint)]">· 4 sources</span>
                 </span>
-                <span className="text-[#3fb950]">
-                  ✓ model candidate evaluated <span className="text-[#4d5a6b]">· +18.6 pts</span>
+                <span className="text-[var(--hx-green)]">
+                  ✓ model candidate evaluated <span className="text-[var(--hx-faint)]">· +18.6 pts</span>
                 </span>
-                <span className="text-[#3fb950]">
-                  ✓ agent guardrails passing <span className="text-[#4d5a6b]">· 42 checks</span>
+                <span className="text-[var(--hx-green)]">
+                  ✓ agent guardrails passing <span className="text-[var(--hx-faint)]">· 42 checks</span>
                 </span>
-                <span className="text-[#4ec9ff]">
+                <span className="text-[var(--hx-cyan)]">
                   → shipping to 3 regions
                   <span className="hx-caret" />
                 </span>
@@ -171,7 +171,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-16 grid gap-8 border-t border-white/10 pt-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-16 grid gap-8 border-t border-[var(--hx-line)] pt-10 sm:grid-cols-2 lg:grid-cols-4">
             <Metric value="142K" label="records analysed" sub="Anomaly detection across a national collection network" />
             <Metric value="+18.6" label="points over baseline" sub="Typical lift of a domain fine-tune vs. the base model" delay={90} />
             <Metric value="3" label="deployment targets" sub="Cloud, on-prem and hybrid from one artifact" delay={180} />
@@ -183,8 +183,8 @@ export default function Home() {
       {/* ---------------------------------------------------------- */}
       {/*  Explore the workstreams                                     */}
       {/* ---------------------------------------------------------- */}
-      <Section id="workstreams" className="border-y border-white/8 bg-[#06090f]">
-        <div className="hx-glow left-1/2 top-1/2 size-[38rem] -translate-x-1/2 -translate-y-1/2 bg-[#0c3352]" aria-hidden />
+      <Section id="workstreams" className="border-y border-[var(--hx-line)] bg-[var(--hx-bg)]">
+        <div className="hx-glow left-1/2 top-1/2 size-[38rem] -translate-x-1/2 -translate-y-1/2 bg-[var(--hx-glow)]" aria-hidden />
         <Container className="relative">
           <SectionHeading
             eyebrow="02 / Where we go deep"
@@ -228,7 +228,7 @@ export default function Home() {
       {/* ---------------------------------------------------------- */}
       <Section id="proof">
         <Container>
-          <div className="hx-panel hx-ticks relative overflow-hidden bg-[#070a10]">
+          <div className="hx-panel hx-ticks relative overflow-hidden bg-[var(--hx-surface)]">
             <div className="hx-noise" aria-hidden />
             <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
               <div className="flex flex-col gap-7 p-8 md:p-12">
@@ -236,26 +236,26 @@ export default function Home() {
                   Real-world signal / deployed
                 </Eyebrow>
 
-                <h2 className="hx-display hx-reveal text-[clamp(1.9rem,4vw,3.1rem)] text-white">
+                <h2 className="hx-display hx-reveal text-[clamp(1.9rem,4vw,3.1rem)] text-[var(--hx-heading)]">
                   142K records.
                   <br />
-                  <span className="text-[#4ec9ff]">One hidden pattern.</span>
+                  <span className="text-[var(--hx-cyan)]">One hidden pattern.</span>
                 </h2>
 
-                <p className="max-w-xl text-[15px] leading-relaxed text-[#93a2b6]">
+                <p className="max-w-xl text-[15px] leading-relaxed text-[var(--hx-muted)]">
                   A multi-agent anomaly detection system for a multimillion-dollar dairy company —
                   built to surface subtle quality anomalies hiding across a vast collection network
                   that manual sampling never caught.
                 </p>
 
-                <ul className="flex flex-col gap-3 border-t border-white/10 pt-6">
+                <ul className="flex flex-col gap-3 border-t border-[var(--hx-line)] pt-6">
                   {[
                     "Fuses sensor, collection and quality signals across heterogeneous sources",
                     "Agents rank and justify every anomaly with traceable evidence",
                     "Findings surfaced to operations, not buried in a dashboard",
                   ].map((t) => (
-                    <li key={t} className="flex gap-3 text-[14px] text-[#8593a6]">
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#3fb950]" />
+                    <li key={t} className="flex gap-3 text-[14px] text-[var(--hx-muted-2)]">
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[var(--hx-green)]" />
                       {t}
                     </li>
                   ))}
@@ -263,41 +263,41 @@ export default function Home() {
 
                 <Link
                   href="/solutions"
-                  className="hx-mono inline-flex w-fit items-center gap-2 border-b border-[#4ec9ff]/40 pb-1 text-[11px] tracking-[0.14em] text-[#4ec9ff] uppercase transition-colors hover:border-[#4ec9ff] hover:text-white"
+                  className="hx-mono inline-flex w-fit items-center gap-2 border-b border-[var(--hx-cyan)]/40 pb-1 text-[11px] tracking-[0.14em] text-[var(--hx-cyan)] uppercase transition-colors hover:border-[var(--hx-cyan)] hover:text-[var(--hx-heading)]"
                 >
                   Read how we approach it <ArrowRight className="size-3.5" />
                 </Link>
               </div>
 
-              <div className="relative border-t border-white/10 bg-[#060a10] p-8 md:p-12 lg:border-t-0 lg:border-l">
+              <div className="relative border-t border-[var(--hx-line)] bg-[var(--hx-bg)] p-8 md:p-12 lg:border-t-0 lg:border-l">
                 <div className="grid gap-8">
                   <div className="flex items-center gap-3">
-                    <Radar className="size-4 text-[#4ec9ff]" />
-                    <span className="hx-mono text-[10px] tracking-[0.18em] text-[#5d6b7e] uppercase">
+                    <Radar className="size-4 text-[var(--hx-cyan)]" />
+                    <span className="hx-mono text-[10px] tracking-[0.18em] text-[var(--hx-faint)] uppercase">
                       Evidence log
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-6">
                     <div>
-                      <strong className="hx-display block text-[clamp(2rem,3.4vw,2.9rem)] leading-none font-medium text-white">
+                      <strong className="hx-display block text-[clamp(2rem,3.4vw,2.9rem)] leading-none font-medium text-[var(--hx-heading)]">
                         600–700+
                       </strong>
-                      <span className="hx-mono mt-2 block text-[10px] leading-relaxed tracking-[0.14em] text-[#5d6b7e] uppercase">
+                      <span className="hx-mono mt-2 block text-[10px] leading-relaxed tracking-[0.14em] text-[var(--hx-faint)] uppercase">
                         collection centres monitored
                       </span>
                     </div>
                     <div>
-                      <strong className="hx-display block text-[clamp(2rem,3.4vw,2.9rem)] leading-none font-medium text-[#3fb950]">
+                      <strong className="hx-display block text-[clamp(2rem,3.4vw,2.9rem)] leading-none font-medium text-[var(--hx-green)]">
                         2 of 3
                       </strong>
-                      <span className="hx-mono mt-2 block text-[10px] leading-relaxed tracking-[0.14em] text-[#5d6b7e] uppercase">
+                      <span className="hx-mono mt-2 block text-[10px] leading-relaxed tracking-[0.14em] text-[var(--hx-faint)] uppercase">
                         AI-flagged centres confirmed in a secret audit
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-3 border-t border-white/10 pt-6">
+                  <div className="flex flex-col gap-3 border-t border-[var(--hx-line)] pt-6">
                     {[
                       { k: "signal", v: "confirmed", ok: true },
                       { k: "precision @ audit", v: "66.7%", ok: true },
@@ -306,10 +306,10 @@ export default function Home() {
                     ].map((r) => (
                       <div
                         key={r.k}
-                        className="hx-mono flex items-center justify-between gap-4 text-[11.5px] text-[#6f8296]"
+                        className="hx-mono flex items-center justify-between gap-4 text-[11.5px] text-[var(--hx-muted-2)]"
                       >
                         <span>{r.k}</span>
-                        <span className={r.ok ? "text-[#3fb950]" : "text-[#f0b429]"}>{r.v}</span>
+                        <span className={r.ok ? "text-[var(--hx-green)]" : "text-[var(--hx-amber)]"}>{r.v}</span>
                       </div>
                     ))}
                   </div>
@@ -323,7 +323,7 @@ export default function Home() {
       {/* ---------------------------------------------------------- */}
       {/*  Process                                                     */}
       {/* ---------------------------------------------------------- */}
-      <Section id="process" className="border-t border-white/8">
+      <Section id="process" className="border-t border-[var(--hx-line)]">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
             <div className="lg:sticky lg:top-28 lg:self-start">
@@ -359,22 +359,22 @@ export default function Home() {
       {/* ---------------------------------------------------------- */}
       {/*  Stack                                                       */}
       {/* ---------------------------------------------------------- */}
-      <Section bleed className="border-y border-white/8 bg-[#06090f] py-10">
+      <Section bleed className="border-y border-[var(--hx-line)] bg-[var(--hx-bg)] py-10">
         <div className="mb-7 flex items-center gap-4">
           <Container className="flex items-center gap-4">
-            <GitBranch className="size-4 shrink-0 text-[#4ec9ff]" />
-            <span className="hx-mono text-[10px] tracking-[0.18em] text-[#5d6b7e] uppercase">
+            <GitBranch className="size-4 shrink-0 text-[var(--hx-cyan)]" />
+            <span className="hx-mono text-[10px] tracking-[0.18em] text-[var(--hx-faint)] uppercase">
               Toolchain we ship with
             </span>
-            <span className="h-px flex-1 bg-white/10" />
-            <Target className="size-4 shrink-0 text-[#3fb950]" />
+            <span className="h-px flex-1 bg-[var(--hx-line)]" />
+            <Target className="size-4 shrink-0 text-[var(--hx-green)]" />
           </Container>
         </div>
         <Marquee
           items={STACK.map((s) => (
             <span
               key={s}
-              className="hx-mono text-[13px] tracking-[0.1em] whitespace-nowrap text-[#8593a6] uppercase"
+              className="hx-mono text-[13px] tracking-[0.1em] whitespace-nowrap text-[var(--hx-muted-2)] uppercase"
             >
               {s}
             </span>
@@ -387,7 +387,7 @@ export default function Home() {
             (s) => (
               <span
                 key={s}
-                className="hx-mono text-[13px] tracking-[0.1em] whitespace-nowrap text-[#4d5a6b] uppercase"
+                className="hx-mono text-[13px] tracking-[0.1em] whitespace-nowrap text-[var(--hx-faint)] uppercase"
               >
                 {s}
               </span>

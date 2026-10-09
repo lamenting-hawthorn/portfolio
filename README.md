@@ -32,26 +32,45 @@ Multi-page Next.js site with a dark, terminal-flavoured design system, a WebGL h
 
 Everything lives in `app/globals.css`:
 
-- `:root` — shadcn tokens plus the Hawthorn palette (`--hx-cyan`, `--hx-green`, `--hx-blue`,
-  `--hx-amber`, `--hx-violet`) and the shared line/dim/glow values
-- `.hx-container` / `.hx-section` — page grid and section rhythm
+- `:root` holds the **light** tokens, `.dark` holds the **dark** tokens — both the shadcn set
+  (`--background`, `--foreground`, `--card`, `--muted-foreground`, `--border`, …) and the
+  Hawthorn semantic set (`--hx-bg`, `--hx-surface`, `--hx-heading`, `--hx-muted`, `--hx-line`,
+  `--hx-cyan`, `--hx-green`, `--hx-blue`, `--hx-btn-*`, …)
+- `.hx-container` / `.hx-gutter` / `.hx-section` — page grid (1440px, fluid gutter) and section
+  rhythm. `.hx-gutter` matches `.hx-container`'s content box so full-height layers (the hero
+  stage) line up with the page grid.
 - `.hx-eyebrow`, `.hx-display`, `.hx-title`, `.hx-lede` — typography scale (Geist Mono for
   display and labels, Geist Sans for body)
 - `.hx-panel`, `.hx-ticks`, `.hx-rule`, `.hx-grid-bg`, `.hx-glow`, `.hx-noise`, `.hx-scanlines`
   — surface and backdrop primitives
 - `.hx-btn-primary` / `.hx-btn-ghost` — button treatments
-- `.hx-reveal` — scroll-reveal (driven once by `RevealObserver` in the root layout)
+- `.hx-reveal` — fade + 18px rise for sections/cards
+- `.hx-rise` — masked line reveal for display headlines (the line slides up from behind its own
+  clip; no blur, no bounce)
+
+### Theme
+
+- `lib/theme.ts` exports `THEME_INIT_SCRIPT`, which runs as the first thing in `<body>` so the
+  resolved theme is applied before anything paints (no flash).
+- Resolution order: stored choice (`hawthorn-theme`) → `prefers-color-scheme` → dark.
+- `components/theme-toggle.tsx` exposes a sun/moon button (header + mobile sheet). It reads state
+  with `useSyncExternalStore` and broadcasts `hx:theme`, which `components/hero-scene.tsx` uses to
+  re-read its WebGL palette from the same tokens.
+- Every colour in the TSX is a `var(--hx-*)` reference, so both themes are driven from one place.
 
 ## Motion
 
 - `components/hero-scene.tsx` — the 3D pipeline: four stations (data → model → agents →
   deployment) with travelling energy pulses, orbiting agent nodes, floating DOM labels and
-  pointer/scroll parallax driven in `useFrame`. Falls back to a static status panel without WebGL
-  and pauses when scrolled out of view.
-- `components/motion.tsx` — `RevealObserver` (IntersectionObserver for every `.hx-reveal`) and
-  `ParallaxLayer` (scroll + pointer offsets; disabled under `prefers-reduced-motion`).
-- `components/hero.tsx` — layered hero: parallax grid → 3D canvas → HUD chips → copy, with a
-  scroll-linked fade on the stage and a typed terminal line.
+  pointer/scroll parallax driven in `useFrame`. Its palette is read from the CSS tokens so it
+  follows the theme. Falls back to a static status panel without WebGL and pauses when scrolled
+  out of view.
+- `components/motion.tsx` — `RevealObserver` (rAF-driven, immune to fast-scroll skips, handles
+  both `.hx-reveal` and `.hx-rise`) and `ParallaxLayer` (scroll + pointer offsets; disabled under
+  `prefers-reduced-motion`).
+- `components/hero.tsx` — layered hero: parallax grid → contained 3D stage → HUD chips → copy,
+  with a scroll-linked fade on the stage. Deliberately restrained: no typewriters, no bouncing
+  cues, no floating cards.
 
 ## Run locally
 

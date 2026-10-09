@@ -57,19 +57,19 @@ export function BriefForm() {
     <form onSubmit={onSubmit} className="flex flex-col gap-5" noValidate>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="flex flex-col gap-2">
-          <span className="hx-mono text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
-            Name <span className="text-[#4ec9ff]">*</span>
+          <span className="hx-mono text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
+            Name <span className="text-[var(--hx-cyan)]">*</span>
           </span>
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Ada Lovelace"
-            className="h-11 rounded-lg border-white/12 bg-[#0a0e15] px-3.5 text-[14px] text-white placeholder:text-[#3f4c5c] focus-visible:border-[#4ec9ff]/60 focus-visible:ring-[#4ec9ff]/30"
+            className="h-11 rounded-lg border-[var(--hx-line-strong)] bg-[var(--hx-surface)] px-3.5 text-[14px] text-[var(--hx-heading)] placeholder:text-[var(--hx-faint-2)] focus-visible:border-[var(--hx-cyan)]/60 focus-visible:ring-[var(--hx-cyan)]/30"
           />
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className="hx-mono text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
+          <span className="hx-mono text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
             Work email
           </span>
           <Input
@@ -77,25 +77,25 @@ export function BriefForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="ada@company.com"
-            className="h-11 rounded-lg border-white/12 bg-[#0a0e15] px-3.5 text-[14px] text-white placeholder:text-[#3f4c5c] focus-visible:border-[#4ec9ff]/60 focus-visible:ring-[#4ec9ff]/30"
+            className="h-11 rounded-lg border-[var(--hx-line-strong)] bg-[var(--hx-surface)] px-3.5 text-[14px] text-[var(--hx-heading)] placeholder:text-[var(--hx-faint-2)] focus-visible:border-[var(--hx-cyan)]/60 focus-visible:ring-[var(--hx-cyan)]/30"
           />
         </label>
       </div>
 
       <label className="flex flex-col gap-2">
-        <span className="hx-mono text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
+        <span className="hx-mono text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
           Company
         </span>
         <Input
           value={company}
           onChange={(e) => setCompany(e.target.value)}
           placeholder="Where you work"
-          className="h-11 rounded-lg border-white/12 bg-[#0a0e15] px-3.5 text-[14px] text-white placeholder:text-[#3f4c5c] focus-visible:border-[#4ec9ff]/60 focus-visible:ring-[#4ec9ff]/30"
+          className="h-11 rounded-lg border-[var(--hx-line-strong)] bg-[var(--hx-surface)] px-3.5 text-[14px] text-[var(--hx-heading)] placeholder:text-[var(--hx-faint-2)] focus-visible:border-[var(--hx-cyan)]/60 focus-visible:ring-[var(--hx-cyan)]/30"
         />
       </label>
 
       <div className="flex flex-col gap-2">
-        <span className="hx-mono text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
+        <span className="hx-mono text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
           Where you are today
         </span>
         <div className="flex flex-wrap gap-2">
@@ -108,8 +108,8 @@ export function BriefForm() {
               className={cn(
                 "hx-mono rounded-lg border px-3.5 py-2 text-[11px] tracking-[0.1em] uppercase transition-all",
                 stage === s
-                  ? "border-[#4ec9ff]/60 bg-[#4ec9ff]/10 text-[#4ec9ff]"
-                  : "border-white/12 bg-[#0a0e15] text-[#8593a6] hover:border-white/25 hover:text-white"
+                  ? "border-[var(--hx-cyan)]/60 bg-[var(--hx-cyan)]/10 text-[var(--hx-cyan)]"
+                  : "border-[var(--hx-line-strong)] bg-[var(--hx-surface)] text-[var(--hx-muted-2)] hover:border-[var(--hx-line-strong)] hover:text-[var(--hx-heading)]"
               )}
             >
               {s}
@@ -119,20 +119,20 @@ export function BriefForm() {
       </div>
 
       <label className="flex flex-col gap-2">
-        <span className="hx-mono text-[10px] tracking-[0.16em] text-[#5d6b7e] uppercase">
-          What should exist? <span className="text-[#4ec9ff]">*</span>
+        <span className="hx-mono text-[10px] tracking-[0.16em] text-[var(--hx-faint)] uppercase">
+          What should exist? <span className="text-[var(--hx-cyan)]">*</span>
         </span>
         <Textarea
           value={brief}
           onChange={(e) => setBrief(e.target.value)}
           rows={5}
           placeholder="The workflow, the data you have, what's failing today, and what 'working' would look like."
-          className="resize-y rounded-lg border-white/12 bg-[#0a0e15] px-3.5 py-3 text-[14px] leading-relaxed text-white placeholder:text-[#3f4c5c] focus-visible:border-[#4ec9ff]/60 focus-visible:ring-[#4ec9ff]/30"
+          className="resize-y rounded-lg border-[var(--hx-line-strong)] bg-[var(--hx-surface)] px-3.5 py-3 text-[14px] leading-relaxed text-[var(--hx-heading)] placeholder:text-[var(--hx-faint-2)] focus-visible:border-[var(--hx-cyan)]/60 focus-visible:ring-[var(--hx-cyan)]/30"
         />
       </label>
 
       {error && (
-        <p className="hx-mono text-[11.5px] text-[#f0b429]" role="alert">
+        <p className="hx-mono text-[11.5px] text-[var(--hx-amber)]" role="alert">
           {error}
         </p>
       )}
@@ -152,13 +152,13 @@ export function BriefForm() {
         <button
           type="button"
           onClick={() => navigator.clipboard?.writeText(window.location.href)}
-          className="hx-mono inline-flex items-center gap-1.5 text-[11px] tracking-[0.12em] text-[#5d6b7e] uppercase transition-colors hover:text-[#8593a6]"
+          className="hx-mono inline-flex items-center gap-1.5 text-[11px] tracking-[0.12em] text-[var(--hx-faint)] uppercase transition-colors hover:text-[var(--hx-muted-2)]"
         >
           <Copy className="size-3.5" /> copy page link
         </button>
       </div>
 
-      <p className="hx-mono text-[10.5px] leading-relaxed tracking-[0.06em] text-[#4d5a6b]">
+      <p className="hx-mono text-[10.5px] leading-relaxed tracking-[0.06em] text-[var(--hx-faint)]">
         {copied
           ? "Brief is on your clipboard — paste it into the call booking note."
           : "This builds a short brief, copies it to your clipboard and opens the scheduler. Nothing is sent to a server."}

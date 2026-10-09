@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, GitBranch, HeartHandshake, Lightbulb, BriefcaseBusiness, Users } from "lucide-react";
 import { Container, Section, SectionHeading } from "@/components/section";
 import type { CSSProperties } from "react";
+import { delay } from "@/lib/delay";
 import { CTABand } from "@/components/blocks";
 import { PageHero, TerminalPanel } from "@/components/page-hero";
 import { Metric, StepCard } from "@/components/cards";
@@ -130,19 +131,19 @@ export default function AboutPage() {
             </div>
 
             <div className="flex flex-col gap-6">
-              <p className="hx-reveal text-[16px] leading-relaxed text-[#93a2b6]">
+              <p className="hx-reveal text-[16px] leading-relaxed text-[var(--hx-muted)]">
                 Most organisations we meet have the same experience: an impressive demo, a growing
                 pile of prototypes, and no reliable path from either to production. The model was
                 never the hard part. The hard part is everything the model needs in order to be safe,
                 measurable and affordable at volume.
               </p>
-              <p className="hx-reveal text-[16px] leading-relaxed text-[#93a2b6] [--hx-delay:90ms]">
+              <p className="hx-reveal text-[16px] leading-relaxed text-[var(--hx-muted)] [--hx-delay:90ms]">
                 That is the whole company. We take ownership of the data contract, the model, the
                 agent runtime and the deployment target, and we do not consider the work finished
                 until your team can run and extend it without us.
               </p>
 
-              <div className="mt-4 grid grid-cols-2 gap-8 border-t border-white/10 pt-8">
+              <div className="mt-4 grid grid-cols-2 gap-8 border-t border-[var(--hx-line)] pt-8">
                 <Metric value="6 wks" label="median time to first production slice" />
                 <Metric value="100%" label="of engagements start with a baseline" delay={90} />
               </div>
@@ -152,7 +153,7 @@ export default function AboutPage() {
       </Section>
 
       {/* Principles */}
-      <Section id="principles" className="border-y border-white/8 bg-[#06090f]">
+      <Section id="principles" className="border-y border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <div className="hx-grid-bg opacity-50" aria-hidden />
         <Container className="relative">
           <SectionHeading
@@ -187,18 +188,18 @@ export default function AboutPage() {
             <div className="flex flex-col">
               {TIMELINE.map((t, i) => (
                 <article
-                  key={t.when}
-                  className="hx-reveal group grid gap-3 border-t border-white/10 py-7 last:border-b sm:grid-cols-[110px_1fr] sm:gap-8"
-                  style={{ "--hx-delay": `${i * 70}ms` } as CSSProperties}
+                  key={`${t.when}-${t.title}`}
+                  className="hx-reveal group grid gap-3 border-t border-[var(--hx-line)] py-7 last:border-b sm:grid-cols-[110px_1fr] sm:gap-8"
+                  style={delay(i * 70)}
                 >
-                  <span className="hx-mono text-[11px] font-semibold tracking-[0.16em] text-[#4ec9ff] uppercase">
+                  <span className="hx-mono text-[11px] font-semibold tracking-[0.16em] text-[var(--hx-cyan)] uppercase">
                     {t.when}
                   </span>
                   <div>
-                    <h3 className="text-[1.15rem] leading-snug font-semibold tracking-[-0.02em] text-white">
+                    <h3 className="text-[1.15rem] leading-snug font-semibold tracking-[-0.02em] text-[var(--hx-heading)]">
                       {t.title}
                     </h3>
-                    <p className="mt-2 text-[14.5px] leading-relaxed text-[#8593a6]">{t.body}</p>
+                    <p className="mt-2 text-[14.5px] leading-relaxed text-[var(--hx-muted-2)]">{t.body}</p>
                   </div>
                 </article>
               ))}
@@ -208,7 +209,7 @@ export default function AboutPage() {
       </Section>
 
       {/* Open source */}
-      <Section id="open-source" className="border-t border-white/8 bg-[#06090f]">
+      <Section id="open-source" className="border-t border-[var(--hx-line)] bg-[var(--hx-bg)]">
         <Container>
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <SectionHeading
@@ -234,24 +235,24 @@ export default function AboutPage() {
                 href="https://github.com/lamenting-hawthorn"
                 target="_blank"
                 rel="noreferrer"
-                className="hx-reveal group flex flex-col gap-3 border border-white/10 bg-[#080c12] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#4ec9ff]/40"
+                className="hx-reveal group flex flex-col gap-3 border border-[var(--hx-line)] bg-[var(--hx-surface)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--hx-cyan)]/40"
                 style={{ "--hx-delay": `${i * 70}ms` } as CSSProperties}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <span className="hx-mono text-[10px] tracking-[0.16em] text-[#4ec9ff] uppercase">
+                    <span className="hx-mono text-[10px] tracking-[0.16em] text-[var(--hx-cyan)] uppercase">
                       {p.kind}
                     </span>
-                    <h3 className="hx-display mt-2 text-[1.35rem] text-white">{p.name}</h3>
+                    <h3 className="hx-display mt-2 text-[1.35rem] text-[var(--hx-heading)]">{p.name}</h3>
                   </div>
-                  <ArrowUpRight className="size-4 text-[#3f4c5c] transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
+                  <ArrowUpRight className="size-4 text-[var(--hx-faint-2)] transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--hx-heading)]" />
                 </div>
-                <p className="text-[14px] leading-relaxed text-[#8593a6]">{p.desc}</p>
+                <p className="text-[14px] leading-relaxed text-[var(--hx-muted-2)]">{p.desc}</p>
                 <div className="mt-auto flex flex-wrap gap-1.5 pt-3">
                   {p.tags.map((t) => (
                     <span
                       key={t}
-                      className="hx-mono rounded-full border border-white/10 px-2.5 py-1 text-[10px] tracking-[0.08em] text-[#6f8296]"
+                      className="hx-mono rounded-full border border-[var(--hx-line)] px-2.5 py-1 text-[10px] tracking-[0.08em] text-[var(--hx-muted-2)]"
                     >
                       {t}
                     </span>
@@ -274,12 +275,12 @@ export default function AboutPage() {
             ].map((c, i) => (
               <div
                 key={c.t}
-                className="hx-reveal flex flex-col gap-3 border border-white/10 bg-[#080c12] p-6"
+                className="hx-reveal flex flex-col gap-3 border border-[var(--hx-line)] bg-[var(--hx-surface)] p-6"
                 style={{ "--hx-delay": `${i * 70}ms` } as CSSProperties}
               >
-                <span className="text-[#4ec9ff]">{c.icon}</span>
-                <h3 className="text-[1.05rem] font-semibold tracking-[-0.02em] text-white">{c.t}</h3>
-                <p className="text-[14px] leading-relaxed text-[#8593a6]">{c.d}</p>
+                <span className="text-[var(--hx-cyan)]">{c.icon}</span>
+                <h3 className="text-[1.05rem] font-semibold tracking-[-0.02em] text-[var(--hx-heading)]">{c.t}</h3>
+                <p className="text-[14px] leading-relaxed text-[var(--hx-muted-2)]">{c.d}</p>
               </div>
             ))}
           </div>
@@ -289,7 +290,7 @@ export default function AboutPage() {
               href="https://www.linkedin.com/in/raghwender-vasisth/"
               target="_blank"
               rel="noreferrer"
-              className="hx-mono inline-flex items-center gap-2 border-b border-white/15 pb-1 text-[11px] tracking-[0.14em] text-[#8593a6] uppercase transition-colors hover:border-[#4ec9ff] hover:text-white"
+              className="hx-mono inline-flex items-center gap-2 border-b border-[var(--hx-line-strong)] pb-1 text-[11px] tracking-[0.14em] text-[var(--hx-muted-2)] uppercase transition-colors hover:border-[var(--hx-cyan)] hover:text-[var(--hx-heading)]"
             >
               <BriefcaseBusiness className="size-3.5" /> LinkedIn
             </a>
@@ -297,7 +298,7 @@ export default function AboutPage() {
               href="https://github.com/lamenting-hawthorn"
               target="_blank"
               rel="noreferrer"
-              className="hx-mono inline-flex items-center gap-2 border-b border-white/15 pb-1 text-[11px] tracking-[0.14em] text-[#8593a6] uppercase transition-colors hover:border-[#4ec9ff] hover:text-white"
+              className="hx-mono inline-flex items-center gap-2 border-b border-[var(--hx-line-strong)] pb-1 text-[11px] tracking-[0.14em] text-[var(--hx-muted-2)] uppercase transition-colors hover:border-[var(--hx-cyan)] hover:text-[var(--hx-heading)]"
             >
               <GitBranch className="size-3.5" /> GitHub
             </a>
@@ -305,7 +306,7 @@ export default function AboutPage() {
               href="https://cal.com/hawthorn"
               target="_blank"
               rel="noreferrer"
-              className="hx-mono inline-flex items-center gap-2 border-b border-white/15 pb-1 text-[11px] tracking-[0.14em] text-[#8593a6] uppercase transition-colors hover:border-[#4ec9ff] hover:text-white"
+              className="hx-mono inline-flex items-center gap-2 border-b border-[var(--hx-line-strong)] pb-1 text-[11px] tracking-[0.14em] text-[var(--hx-muted-2)] uppercase transition-colors hover:border-[var(--hx-cyan)] hover:text-[var(--hx-heading)]"
             >
               Book a call <ArrowUpRight className="size-3.5" />
             </a>
