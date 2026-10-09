@@ -101,4 +101,10 @@ app/globals.css     the entire design system
 
 ## Live site
 
-[raghwender-agentic-portfolio.hawthorn-creates.chatgpt.site](https://raghwender-agentic-portfolio.hawthorn-creates.chatgpt.site)
+[hawthorn-ai-labs.vercel.app](https://hawthorn-ai-labs.vercel.app)
+
+Deployed from `main` via Vercel's Git integration. Local checks before pushing:
+
+```bash
+npm run lint && npx tsc --noEmit && npm run build
+```

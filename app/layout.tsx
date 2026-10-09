@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hawthorn-ai-labs.example.com"),
+  metadataBase: new URL("https://hawthorn-ai-labs.vercel.app"),
   title: {
     default: "Hawthorn AI Labs — Custom AI Models & Agentic Systems",
     template: "%s · Hawthorn AI Labs",
